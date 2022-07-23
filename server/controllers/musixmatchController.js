@@ -1,6 +1,6 @@
 const axios = require('axios');
 const albumArt = require( 'album-art' );
-
+const prepareURL = require("../utils/prepareURL");
 const ErrorHandler = require('../utils/errorHandler');
 const GlobalTryCatchAsync = require('../utils/globalTryCatchAsync');
 
@@ -14,23 +14,36 @@ const createTrackObject = (track,cover) => {
     }
 }
 
-const getAlbumCoverImage = async (artist,album) => {
-    let cover = await albumArt(artist,{album: album, size:'medium'});
-    return cover;
+const getCleanArtistName = async (artistId) => {
+    const url = `${prepareURL("artist.get")}&artist_id=${artistId}`;
+    const artist = await axios.get(url);
+    const artistCreditsList = artist.data.message.body.artist.artist_credits.artist_list;
+
+    return (artistCreditsList.length == 0)?artist.data.message.body.artist.artist_name : artistCreditsList[0].artist.artist_name;
+}
+
+const getAlbumCoverImage = async (artistID,album) => {
+    try{
+        const artistName = await getCleanArtistName(artistID);
+        let cover = await albumArt(artistName,{album: album, size:'medium'});
+        return (cover.name)?"":cover;
+    } catch(error) {
+        return "";
+    }
 };
 
 exports.searchTracks = GlobalTryCatchAsync(async (req, res, next) => {
-        const apiKey = process.env.MUSIXMATCH_API_KEY;
-        const url = process.env.MUSIXMATCH_URL;
-        const params = req.query;
-
+        const searchParams = req.query.search || "";
+        const page = req.query.page || 1;
         const tracks = [];
 
-        const query = await axios.get(`${url}/track.search?apikey=${apiKey}&q=${params.search}&f_has_lyrics=1&s_track_rating=desc`);
+        const url = `${prepareURL("track.search",page)}&q_track_artist=${searchParams}&f_has_lyrics=1&s_track_rating=desc`;
+
+        const query = await axios.get(url);
         const result = query.data.message.body.track_list;
 
         for(const track of result){
-            const albumCoverImage = await getAlbumCoverImage(track.track.artist_name, track.track.album_name)
+            const albumCoverImage = await getAlbumCoverImage(track.track.artist_id, track.track.album_name);
             tracks.push(createTrackObject(track.track, albumCoverImage));
         }
 
