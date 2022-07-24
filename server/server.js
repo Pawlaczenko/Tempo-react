@@ -31,7 +31,7 @@ app.use(errorControler);
 const server = app.listen(process.env.PORT || 3001);
 
 process.on('unhandledRejection', err => {
-  console.log("____nhandled rejection____");
+  console.log("____unhandled rejection____");
   console.log(err.name,err.message);
   server.close(()=>{
       process.exit(1);
