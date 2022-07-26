@@ -1,15 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
-import backgroundImage from "./assets/images/background.svg";
+import backgroundImage from "../assets/images/background.svg";
 
 const GlobalStyle = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&family=Roboto+Mono:wght@200&family=Source+Sans+Pro:wght@700&display=swap');
 
     html {
-        --color-primary: '#F79D75';
-        --color-secondary: '#6A7588';
-        --color-grey: '#BFC0C0';
-        --color-background: '#BFC0C0';
+        --color-primary: #F79D75;
+        --color-secondary: #6A7588;
+        --color-grey: #BFC0C0;
+        --color-background: #F6F6F6;
     }
 
     body{
