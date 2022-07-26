@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import {baseShadow, absoluteCenter} from '../../styles/mixins';
 
+import Header from '../Header';
+import {Outlet} from 'react-router-dom';
+
 function App() {
   return (
     <Wrapper>
-      Hello world
+      <Header />
+      <Outlet />
     </Wrapper>
   );
 }
@@ -18,7 +22,7 @@ const Wrapper = styled.div`
     ${baseShadow}
 
     border-radius: 20px;
-    padding: 58px 56px;
+    padding: 40px 56px;
 `;
 
 export default App;
