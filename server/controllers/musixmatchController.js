@@ -39,9 +39,9 @@ const getCleanLyrics = (lyrics) => {
 
 const getAlbumCoverImage = async (artistID,album="") => {
     try{
-        const artistName = await getCleanArtistName(artistID);
+        const artistName = await getCleanArtistName(artistID) || "";
         let cover = await albumArt(artistName,{album: album, size:'medium'});
-        return (cover.name)?"":cover;
+        return (cover.name) ? "" : cover;
     } catch(error) {
         return "";
     }
