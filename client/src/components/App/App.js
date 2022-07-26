@@ -1,10 +1,15 @@
-import { Outlet, Link } from "react-router-dom";
+import styled from "styled-components";
 
 function App() {
   return (
-    <div className="App">
+    <div>
+      Hello world
     </div>
   );
 }
+
+const Wrapper = styled.div`
+  
+`;
 
 export default App;
