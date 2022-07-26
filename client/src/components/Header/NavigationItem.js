@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
 
 const NavigationItem = ({children, path}) => {
+
   return (
-    <StyledLink to={path} className={({isActive}) => isActive ? "active" : ""}>
+    <StyledLink to={path} >
         {children}
     </StyledLink>
   )

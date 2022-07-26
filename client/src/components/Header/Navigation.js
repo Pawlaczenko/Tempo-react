@@ -12,8 +12,7 @@ const Navigation = () => {
   )
 }
 
-const Wrapper = styled.ul`
-    list-style-type: none;
+const Wrapper = styled.nav`
     display: flex;
     gap: 15px;
 `;
