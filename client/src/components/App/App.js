@@ -14,15 +14,15 @@ function App() {
 }
 
 const Wrapper = styled.div`
-    width: min(90%, 1800px);
-    height: min(90%, 950px);
+    width: min(91%,1750px);
+    height: min(91vh,815px);
     ${absoluteCenter}
     
     background-color: var(--color-background);
     ${baseShadow}
 
-    border-radius: 20px;
-    padding: 40px 56px;
+    border-radius: 2rem;
+    padding: 4rem 5.6rem;
 `;
 
 export default App;

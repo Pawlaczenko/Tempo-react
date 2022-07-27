@@ -1,7 +1,7 @@
 import {css} from 'styled-components';
 
 export const baseShadow = css`
-    box-shadow: 0 0 17px rgba(0,0,0,.15);
+    box-shadow: 0 0 1.7rem rgba(0,0,0,.15);
 `;
 
 export const absoluteCenter = css`

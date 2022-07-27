@@ -13,9 +13,9 @@ const Logo = () => {
   )
 }
 
-const LogoStyled = styled(Link)`
+export const LogoStyled = styled(Link)`
   & > img {
-    max-width: 150px;
+    max-width: 17rem;
   }
 `;
 

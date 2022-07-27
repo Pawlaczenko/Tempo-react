@@ -14,7 +14,7 @@ const Navigation = () => {
 
 const Wrapper = styled.nav`
     display: flex;
-    gap: 15px;
+    gap: 2.5rem;
 `;
 
 export default Navigation
