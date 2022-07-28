@@ -4,16 +4,17 @@ import NavigationItem from './NavigationItem';
 
 const Navigation = () => {
   return (
-    <Wrapper>
+    <StyledNavigation>
         <NavigationItem path="/">Home</NavigationItem>
         <NavigationItem path="/about">About</NavigationItem>
         <NavigationItem path="/myWork">My Work</NavigationItem>
-    </Wrapper>
+    </StyledNavigation>
   )
 }
 
-const Wrapper = styled.nav`
+export const StyledNavigation = styled.nav`
     display: flex;
+    align-items: center;
     gap: 2.5rem;
 `;
 

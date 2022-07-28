@@ -7,15 +7,22 @@ import {Link} from 'react-router-dom';
 
 const Logo = () => {
   return (
-    <LogoStyled to="/">
-        <img src={logo} alt="Tempo logo" />
+    <LogoStyled>
+      <Link to="/">
+          <img src={logo} alt="Tempo logo" />
+      </Link>
     </LogoStyled>
   )
 }
 
-export const LogoStyled = styled(Link)`
-  & > img {
-    max-width: 17rem;
+export const LogoStyled = styled.div`
+
+  & a {
+    width: 17rem;
+    display: block;
+  }
+  & img {
+    width: 100%;
   }
 `;
 

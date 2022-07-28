@@ -9,10 +9,13 @@ const variables = css`
         --color-secondary: hsla(var(--base-color-secondary),47%,100%);
 
         --base-color-grey: 180, 1%;
-        --color-grey: hsla(var(--base-color-grey),75%,100%);
+        --color-grey-light: hsla(var(--base-color-grey),75%,100%);
+        --color-grey-dark: hsla(var(--base-color-grey),50%,100%);
 
         --base-color-background: 0,0%;
         --color-background: hsla(var(--base-color-background),95%,80%);
+
+        --shadow-light: 0 1px 4px 0 rgba(0,0,0,.2);
     }
 `;
 

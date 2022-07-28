@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {baseShadow, absoluteCenter} from '../../styles/mixins';
+import {absoluteCenter} from '../../styles/mixins';
 
 import Header from '../Header';
 import {Outlet} from 'react-router-dom';
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
     ${absoluteCenter}
     
     background-color: var(--color-background);
-    ${baseShadow}
+    box-shadow: var(--shadow-light);
 
     border-radius: 2rem;
     padding: 4rem 5.6rem;
