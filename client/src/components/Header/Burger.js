@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { breakpoints } from '../../constants';
 
@@ -19,7 +19,7 @@ const StyledBurger = styled.button`
 
     display: none;
     width: 4rem;
-    height: calc(3 * var(--burger-height) + 2 * var(--burger-gap));
+    height: 4rem;
     
     border: none;
     cursor: pointer;
@@ -32,8 +32,9 @@ const StyledBurger = styled.button`
         background-color: var(--burger-color);
         transition: all .2s ease-in-out;
 
+
         ${props => props.isOpen && `
-            background-color: transparent;
+            background-color: transparent; 
         `}
     }
 
@@ -54,7 +55,7 @@ const StyledBurger = styled.button`
         /* transform-origin: top left; */
         top: calc(var(--burger-gap) * -1);
         ${props => props.isOpen && `
-            transform: translate(0,5px) rotate(45deg);
+            transform: translate(0,6px) rotate(45deg);
         `}
     }
 

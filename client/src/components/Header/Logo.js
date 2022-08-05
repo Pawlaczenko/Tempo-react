@@ -16,7 +16,7 @@ const Logo = () => {
 }
 
 export const LogoStyled = styled.div`
-
+  position: relative;
   & a {
     width: 17rem;
     display: block;

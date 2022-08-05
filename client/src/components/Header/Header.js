@@ -14,11 +14,11 @@ function Header() {
   return (
     <Wrapper>
       <Logo />
-      <Burger isOpen={isOpen} handleClick={handleMenuOpen} />
-      <SideMenu>
+      <SideMenu isOpen={isOpen}>
         <Navigation />
         <SearchBar />
       </SideMenu>
+      <Burger isOpen={isOpen} handleClick={handleMenuOpen} />
     </Wrapper>
   );
 }
@@ -33,10 +33,11 @@ const Wrapper = styled.header`
 const SideMenu = styled.div`
   display: flex;
   gap: 4rem;
+  transition: all .3s ease;
 
   @media only screen and (${breakpoints.burger}){
     position: fixed;
-    right: -100%;
+    right: ${props => props.isOpen ? "0" : "100%"};
     top: 0;
 
     width: 100%;
@@ -45,7 +46,7 @@ const SideMenu = styled.div`
 
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
   }
 `;
 
