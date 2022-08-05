@@ -5,8 +5,6 @@ import reset from "./reset";
 import variables from "./variables";
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&family=Roboto+Mono:wght@200&family=Source+Sans+Pro:wght@700&display=swap');
-
     ${variables}
 
     html {

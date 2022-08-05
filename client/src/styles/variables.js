@@ -2,6 +2,7 @@ import { css } from "styled-components";
 
 const variables = css`
     :root {
+        // COLORS
         --base-color-primary: 18, 89%;
         --color-primary: hsla(var(--base-color-primary), 70%, 100%);
 
@@ -15,6 +16,7 @@ const variables = css`
         --base-color-background: 0,0%;
         --color-background: hsla(var(--base-color-background),95%,80%);
 
+        //GENERAL STYLES
         --shadow-light: 0 1px 4px 0 rgba(0,0,0,.2);
     }
 `;

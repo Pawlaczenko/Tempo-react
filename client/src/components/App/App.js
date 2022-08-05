@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {absoluteCenter} from '../../styles/mixins';
+import { breakpoints } from '../../constants';
 
 import Header from '../Header';
 import {Outlet} from 'react-router-dom';
@@ -23,6 +24,12 @@ const Wrapper = styled.div`
 
     border-radius: 2rem;
     padding: 4rem 5.6rem;
+
+    @media only screen and (${breakpoints.medium}){
+      border-radius: 0;
+      width: 100%;
+      height: 100%;
+    }
 `;
 
 export default App;
