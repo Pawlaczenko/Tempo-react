@@ -3,6 +3,7 @@ import { BlueButton } from '../../components/Button'
 import Heading from '../../components/Heading'
 import SearchBar from '../../components/SearchBar'
 import {flexCenter} from '../../styles/mixins';
+import {breakpoints} from '../../constants';
 
 import {FiStar} from "react-icons/fi";
 import styled from 'styled-components';
@@ -22,7 +23,6 @@ const HomePage = () => {
 
 const StyledMain = styled.main`
   height: 100%;
-  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -43,6 +43,10 @@ const CTAs = styled.div`
   ${flexCenter};
   flex-direction: column;
   gap: 1.5rem;
+
+  @media only screen and (${breakpoints.phone}){
+    width: 100%;
+  } 
 `;
 
 export default HomePage

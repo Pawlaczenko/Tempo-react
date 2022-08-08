@@ -36,17 +36,18 @@ const SideMenu = styled.div`
   transition: all .3s ease;
 
   @media only screen and (${breakpoints.burger}){
-    position: fixed;
-    right: ${props => props.isOpen ? "0" : "100%"};
+    position: absolute;
+    left: ${props => props.isOpen ? "0" : "100%"};
     top: 0;
 
     width: 100%;
     height: 100%;
+    padding: 4rem;
     background-color: white;
 
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
   }
 `;
 

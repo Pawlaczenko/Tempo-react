@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {FiSearch} from "react-icons/fi";
 import {flexCenter} from "../../styles/mixins";
+import { breakpoints } from '../../constants';
 
 function SearchBar({variant, placeholder = "Search"}) {
   return (
@@ -15,47 +16,49 @@ function SearchBar({variant, placeholder = "Search"}) {
 }
 
 const Wrapper = styled.form`
-  position: relative;
   width: ${params => params.variant === "big" ? "50rem" : "40rem"};
   font-size:  ${params => params.variant === "big" ? "2rem" : "1.7rem"};
 
   --button-size: 13%;
   --input-border-radius: 2rem;
   --translateInput: translateY(-3px);
+  --inputOutline: 2px solid var(--color-primary);
+
+  display: grid;
+  grid-template-columns: 1fr var(--button-size);
 
   & > * {
     transition: transform .2s ease;
   }
+
+  @media only screen and (${breakpoints.phone}){
+    width: 100%;
+  } 
 `;
 
 const SearchInput = styled.input`
-  width: 100%;
   height: 100%;
   padding: 1.5rem;
-  padding-right: calc(var(--button-size) + .8rem);
+  padding-right: var(--button-size);
 
   background-color: white;
   border: none;
-  border-radius: var(--input-border-radius);
+  border-radius: var(--input-border-radius) 0 0 var(--input-border-radius);
   box-shadow: var(--shadow-light);
 
   color: var(--color-grey-dark);
 
   &:focus {
-    outline: 2px solid var(--color-primary);
+    outline: var(--inputOutline);
     transform: var(--translateInput);
     & + button {
       transform: var(--translateInput);
+      outline: var(--inputOutline);
     }
   }
 `;
 
 const SearchButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 0;
-
-  width: var(--button-size);
   height: 100%;
   ${flexCenter}
 

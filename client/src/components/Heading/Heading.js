@@ -8,7 +8,7 @@ function Heading({level,children}) {
 
 const StyledHeading = styled.h1`
   font-family: 'Source Sans Pro', sans-serif;
-  font-size: 6.5rem;
+  font-size: clamp(4rem, 5vw ,6.5rem);
   font-weight: bold;
 
   & mark {
