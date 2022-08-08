@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import {absoluteCenter} from '../../styles/mixins';
 import { breakpoints } from '../../constants';
-
+import scrollbar from '../../styles/scrollbar';
+ 
 import Header from '../Header';
 import {Outlet} from 'react-router-dom';
 
@@ -20,6 +21,8 @@ const Wrapper = styled.div`
     ${absoluteCenter}
     overflow-y: auto;
     overflow-x: hidden;
+
+    ${scrollbar};
     
     background-color: var(--color-background);
     box-shadow: var(--shadow-light);

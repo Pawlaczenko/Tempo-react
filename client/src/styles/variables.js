@@ -5,6 +5,8 @@ const variables = css`
         // COLORS
         --base-color-primary: 18, 89%;
         --color-primary: hsla(var(--base-color-primary), 70%, 100%);
+        --color-primary-opace: hsla(var(--base-color-primary), 70%, 30%);
+        --color-primary-dark: hsla(var(--base-color-primary), 60%, 100%);
 
         --base-color-secondary: 218, 12%;
         --color-secondary: hsla(var(--base-color-secondary),47%,100%);

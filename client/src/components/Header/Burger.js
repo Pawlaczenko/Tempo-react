@@ -29,6 +29,7 @@ const StyledBurger = styled.button`
         width: 100%;        
         height: var( --burger-height);
         position: relative;
+        z-index: 150;
         background-color: var(--burger-color);
         transition: all .2s ease-in-out;
 

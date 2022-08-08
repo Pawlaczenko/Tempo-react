@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from 'styled-components';
 import SearchBar from "../SearchBar";
 import Logo from "./Logo";
@@ -6,8 +6,15 @@ import Navigation from "./Navigation";
 import { breakpoints } from '../../constants';
 import Burger from "./Burger";
 
+import {useLocation} from "react-router-dom";
+
 function Header() {
   const [isOpen, toggleOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    toggleOpen(false);
+  }, [location]);
 
   const handleMenuOpen = () => toggleOpen(!isOpen);
 
@@ -37,6 +44,7 @@ const SideMenu = styled.div`
 
   @media only screen and (${breakpoints.burger}){
     position: absolute;
+    z-index: 100;
     left: ${props => props.isOpen ? "0" : "100%"};
     top: 0;
 
