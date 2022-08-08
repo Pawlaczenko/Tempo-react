@@ -1,11 +1,10 @@
 import React from 'react'
-import { BlueButton } from '../../components/Button'
+import TopInUsButton from '../../components/Button/TopInUsButton'
 import Heading from '../../components/Heading'
 import SearchBar from '../../components/SearchBar'
 import {flexCenter} from '../../styles/mixins';
 import {breakpoints} from '../../constants';
 
-import {FiStar} from "react-icons/fi";
 import styled from 'styled-components';
 
 const HomePage = () => {
@@ -15,7 +14,7 @@ const HomePage = () => {
       <CTAs>
         <SearchBar variant="big" placeholder='Search for a song/artist/album'/>
         <span>or</span>
-        <BlueButton><FiStar /> Get top songs in US</BlueButton>
+        <TopInUsButton />
       </CTAs>
     </StyledMain>
   )
