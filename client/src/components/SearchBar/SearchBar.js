@@ -3,10 +3,10 @@ import styled from "styled-components";
 import {FiSearch} from "react-icons/fi";
 import {flexCenter} from "../../styles/mixins";
 
-function SearchBar() {
+function SearchBar({variant, placeholder = "Search"}) {
   return (
-    <Wrapper>
-      <SearchInput type="text" placeholder="Search" />
+    <Wrapper variant={variant}>
+      <SearchInput type="text" placeholder={placeholder} />
       <SearchButton>
         <FiSearch />
       </SearchButton>
@@ -15,12 +15,12 @@ function SearchBar() {
 }
 
 const Wrapper = styled.form`
-  width: 40rem;
-  max-height: 5rem;
   position: relative;
+  width: ${params => params.variant === "big" ? "50rem" : "40rem"};
+  font-size:  ${params => params.variant === "big" ? "2rem" : "1.7rem"};
 
-  --input-border-radius: 2rem;
   --button-size: 13%;
+  --input-border-radius: 2rem;
   --translateInput: translateY(-3px);
 
   & > * {
@@ -39,7 +39,6 @@ const SearchInput = styled.input`
   border-radius: var(--input-border-radius);
   box-shadow: var(--shadow-light);
 
-  font-size: 1.7rem;
   color: var(--color-grey-dark);
 
   &:focus {
