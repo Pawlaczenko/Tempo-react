@@ -1,13 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import {FiSearch} from "react-icons/fi";
 import {flexCenter} from "../../styles/mixins";
 import { breakpoints } from '../../constants';
 
+import { useNavigate } from "react-router-dom";
+
 function SearchBar({variant, placeholder = "Search"}) {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleOnChange = (e) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setQuery(value);
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/songs/search?query=${query}`);
+  }
+
   return (
-    <Wrapper variant={variant}>
-      <SearchInput type="text" placeholder={placeholder} />
+    <Wrapper variant={variant} onSubmit={handleSubmit}>
+      <SearchInput type="text" placeholder={placeholder} onChange={handleOnChange} value={query}/>
       <SearchButton>
         <FiSearch />
       </SearchButton>

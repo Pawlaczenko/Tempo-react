@@ -10,7 +10,7 @@ import styled from 'styled-components';
 const HomePage = () => {
   return (
     <StyledMain>
-      <Heading level="big">Test <mark>your</mark> typing speed<br /> with <mark>your</mark> favourite songs</Heading>
+      <Heading level="1">Test <mark>your</mark> typing speed<br /> with <mark>your</mark> favourite songs</Heading>
       <CTAs>
         <SearchBar variant="big" placeholder='Search for a song/artist/album'/>
         <span>or</span>

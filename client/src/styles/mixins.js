@@ -12,3 +12,10 @@ export const flexCenter = css`
     align-items: center;
     justify-content: center;
 `;
+
+export const ellipsis = css`
+    display: -webkit-box;
+    -webkit-line-clamp: ${props => props.rows || 1};
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+`;

@@ -18,6 +18,8 @@ const variables = css`
         --base-color-background: 0,0%;
         --color-background: hsla(var(--base-color-background),95%,80%);
 
+        --color-warning: hsl(352, 74%, 57%);
+
         //GENERAL STYLES
         --shadow-light: 0 1px 4px 0 rgba(0,0,0,.2);
     }
