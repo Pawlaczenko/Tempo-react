@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react'
 import { useSearchParams  } from "react-router-dom"
 
 import styled from 'styled-components';
+import LoadingSpinner from '../../components/LoadingSpinner';
 import SongsGrid from '../../components/SongsGrid/SongsGrid';
-import { populateCovers } from '../../helpers/populateCovers.helper';
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams("");
-    const [songs, setSongs] = useState();
+    const [songs, setSongs] = useState([]);    
     const query = searchParams.get("query");
     const page = searchParams.get("page");
     
@@ -16,19 +16,22 @@ const SearchPage = () => {
             .then((res) => res.json())
             .then((data) => {
                 setSongs(data.data);
-                // populateCovers(data.data);
             });
+        return () => {
+            setSongs([]);
+        }
     },[query,page]);
 
     return (
         <StyledMain>
-            {songs ? <SongsGrid query={query} songs={songs} /> : "loading"}
+            {(songs && songs.length) ? <SongsGrid query={query} songs={songs} /> : <LoadingSpinner />}
         </StyledMain>
     )
 }
 
 const StyledMain = styled.main`
   height: 100%;
+  position: relative;
 `;
 
 export default SearchPage

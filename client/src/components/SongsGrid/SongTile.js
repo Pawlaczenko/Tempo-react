@@ -28,7 +28,10 @@ const SongTile = ({song}) => {
 }
 
 const StyledSongTile = styled.div`
-    display: flex;
+    --cover-size: 15rem;
+    display: grid;
+    grid-template-columns: var(--cover-size) 1fr;
+    grid-template-rows: var(--cover-size);
     position: relative;
     cursor: pointer;
     --text-color: var(--color-grey-dark);
@@ -69,8 +72,9 @@ const StyledSongTile = styled.div`
 `;
 
 const StyledImage = styled.figure`
-    max-width: 15rem;
-    max-height: 15rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 
     & > img {
         width: 100%;

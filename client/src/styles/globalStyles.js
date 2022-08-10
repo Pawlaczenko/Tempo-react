@@ -3,9 +3,11 @@ import { createGlobalStyle } from "styled-components";
 import backgroundImage from "../assets/images/background.svg";
 import reset from "./reset";
 import variables from "./variables";
+import animations from "./animations";
 
 const GlobalStyle = createGlobalStyle`
     ${variables}
+    ${animations}
 
     html {
         font-size: 62.5%;
