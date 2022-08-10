@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import {FiSearch} from "react-icons/fi";
 import {flexCenter} from "../../styles/mixins";
@@ -19,6 +19,7 @@ function SearchBar({variant, placeholder = "Search"}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate(`/songs/search?query=${query}`);
+    setQuery("");
   }
 
   return (

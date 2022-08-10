@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {flexCenter, absoluteCenter} from '../../styles/mixins';
+import {flexCenter} from '../../styles/mixins';
 
 function LoadingSpinner() {
   return (

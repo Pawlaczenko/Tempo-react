@@ -64,7 +64,7 @@ const StyledSongTile = styled.div`
         &::after,
         &::before {
             width: 100%;
-            height: 50%;
+            height: 0;
             border-width: 5px;
             border-color: var(--color-primary);
         }
