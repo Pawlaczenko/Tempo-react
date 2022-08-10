@@ -75,6 +75,7 @@ const StyledImage = styled.figure`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    background-color: var(--color-grey-light);
 
     & > img {
         width: 100%;
