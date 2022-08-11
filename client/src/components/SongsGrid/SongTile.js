@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import defaultImage from '../../assets/images/defaultAlbumImage.svg';
 import {ellipsis} from '../../styles/mixins'
+import { breakpoints } from '../../constants';
 
 const SongTile = ({song}) => {
     const [songCover,setSongCover] = useState(defaultImage);
@@ -35,6 +36,11 @@ const StyledSongTile = styled.div`
     position: relative;
     cursor: pointer;
     --text-color: var(--color-grey-dark);
+
+    @media only screen and (${breakpoints.extra_small}){
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
 
     &:after,
     &:before{

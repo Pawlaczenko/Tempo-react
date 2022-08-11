@@ -1,5 +1,7 @@
 export const breakpoints = {
     medium: `max-width:950px`,
     burger: `max-width:850px`,
-    phone: `max-width:470px`
+    small: `max-width:550px`,
+    phone: `max-width:470px`,
+    extra_small: `max-width:360px`,
 }

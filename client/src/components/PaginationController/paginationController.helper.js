@@ -1,5 +1,5 @@
 export const countPages = (noOfItems) => {
-    const ITEMS_PER_PAGE = 9;
+    const ITEMS_PER_PAGE = 12;
     return Math.ceil(noOfItems / ITEMS_PER_PAGE);
 }
 

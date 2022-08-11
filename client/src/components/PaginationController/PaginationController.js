@@ -3,6 +3,7 @@ import {FiChevronLeft,FiChevronRight} from "react-icons/fi";
 import styled from "styled-components";
 import {countPages, getBoundaries} from './paginationController.helper';
 import PaginationItem from "./PaginationItem";
+import {breakpoints} from '../../constants';
 
 function PaginationController({currentPage, songsCount, handlePageChange}) {
   const pages = countPages(songsCount);
@@ -28,13 +29,18 @@ function PaginationController({currentPage, songsCount, handlePageChange}) {
 const Wrapper = styled.ul`
   font-size: 2rem;
   list-style-type: none;
-  padding-top: 4rem;
+  padding: 4rem 0 0 0;
 
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
   
+  @media only screen and (${breakpoints.extra_small}){
+    font-size: 1.6rem;
+    gap: 3px;      
+  }
+
 `;
 
 export default PaginationController;

@@ -63,10 +63,11 @@ const StyledMain = styled.main`
 
   display: grid;
   grid-template-rows: auto 1fr auto;
+  align-items: center;
 `;
 
 const StyledSpacer = styled.div`
-    height: 100%;
+    /* height: 100%; */
 `;
 
 export default SearchPage
