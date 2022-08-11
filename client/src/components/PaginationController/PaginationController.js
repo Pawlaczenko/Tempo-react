@@ -16,11 +16,11 @@ function PaginationController({currentPage, songsCount, handlePageChange}) {
 
   return (
     <Wrapper>
-      <PaginationItem handleClick={()=>handlePageChange(Math.max(currentPage-1,1))} >{<FiChevronLeft />}</PaginationItem>
+      <PaginationItem disabled={currentPage===1} handleClick={()=>handlePageChange(Math.max(currentPage-1,1))} >{<FiChevronLeft />}</PaginationItem>
       <PaginationItem handleClick={()=>handlePageChange(1)}>...</PaginationItem>
       {pageComponents}
       <PaginationItem handleClick={()=>handlePageChange(pages)}>...</PaginationItem>
-      <PaginationItem handleClick={()=>handlePageChange(Math.min(currentPage+1,pages))}>{<FiChevronRight />}</PaginationItem>
+      <PaginationItem disabled={currentPage===pages} handleClick={()=>handlePageChange(Math.min(currentPage+1,pages))}>{<FiChevronRight />}</PaginationItem>
     </Wrapper>
   );
 }
