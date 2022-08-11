@@ -26,7 +26,7 @@ const createLyricsObject = (lyricsObj) => {
 
 const getCleanArtistName = async (artistId) => {
     const url = `${prepareURL("artist.get")}&artist_id=${artistId}`;
-    const artist = await axios.get(url);
+    const artist = await axios.get(encodeURI(url));
     const artistCreditsList = artist.data.message.body.artist.artist_credits.artist_list;
 
     return (artistCreditsList.length == 0)?artist.data.message.body.artist.artist_name : artistCreditsList[0].artist.artist_name;
@@ -53,14 +53,19 @@ exports.searchTracks = GlobalTryCatchAsync(async (req, res, next) => {
 
         const url = `${prepareURL("track.search",page)}&q_track_artist=${searchParams}&f_has_lyrics=1&s_track_rating=desc`;
 
-        const query = await axios.get(url);
+        const query = await axios.get(encodeURI(url));
         const result = query.data.message.body.track_list;
+        let songsCount = query.data.message.header.available;
+
+        //API error fix
+        songsCount = (songsCount === 10000) ? 600 : songsCount;
+
 
         const tracks = result.map(track => createTrackObject(track.track));
 
         res.status(200).json({
-            status: 'success',
-            data: tracks
+            tracks: tracks,
+            songsCount: songsCount
         });
     }
 );
@@ -69,14 +74,15 @@ exports.getTopUS = GlobalTryCatchAsync(async(req,res,next) => {
     const page = req.query.page || 1;
     const url = `${prepareURL("chart.tracks.get",page)}&f_has_lyrics=1`;
 
-    const query = await axios.get(url);
+    const query = await axios.get(encodeURI(url));
     const result = query.data.message.body.track_list;
+    const songsCount = query.data.message.header.available;
 
     const tracks = result.map(track => createTrackObject(track.track));
 
     res.status(200).json({
-        status: 'success',
-        data: tracks
+        tracks: tracks,
+        songsCount: songsCount
     });
 });
 
@@ -84,12 +90,11 @@ exports.getLyrics = GlobalTryCatchAsync(async(req,res,next)=>{
     const track_id = req.params.id;
     const url = `${prepareURL("track.lyrics.get")}&track_id=${track_id}`;
 
-    const query = await axios.get(url);
+    const query = await axios.get(encodeURI(url));
     const result = createLyricsObject(query.data.message.body.lyrics);
 
     res.status(200).json({
-        status: 'success',
-        data: result
+        lyrics: result
     });
 });
 

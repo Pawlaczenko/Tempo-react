@@ -7,9 +7,9 @@ import {breakpoints} from '../../constants';
 
 function PaginationController({currentPage, songsCount, handlePageChange}) {
   const pages = countPages(songsCount);
-  let pageComponents = [];
   const [left,right] = getBoundaries(currentPage,pages);
 
+  let pageComponents = [];
   for(let i = left; i <= right; i++){
     let page = i;
     pageComponents.push(<PaginationItem current={page === currentPage} key={page} handleClick={()=>handlePageChange(page)}>{page}</PaginationItem>);
