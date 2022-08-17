@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { useSearchParams  } from "react-router-dom"
 import useFetch from '../../hooks/useFetch';
 
@@ -10,11 +10,24 @@ import ErrorMessage from '../../components/ErrorMessage';
 import PaginationController from '../../components/PaginationController/PaginationController';
 
 const SearchPage = () => {
-    const [searchParams, setSearchParams] = useSearchParams("");
+    const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get("query") || "";
-    const [page, setPage] = useState(1);
 
-    const {data : songs, isPending, error} = useFetch(`/api/searchTracks?search=${query}`, page);
+    const [page, setPage] = useState(1);
+    const [url, setUrl] = useState(`/api/searchTracks?search=${query}&page=${page}`);
+
+    useEffect(()=>{
+        setUrl(`/api/searchTracks?search=${query}&page=${page}`);
+    },[page])
+
+    useEffect(()=> {
+        setUrl(`/api/searchTracks?search=${query}&page=1`);
+        return () => {
+            setPage(1);
+        }
+    },[query]);
+
+    const {data : songs, isPending, error} = useFetch({url});
     const headingTopic = query || "Top songs in US";
 
     const handlePageChange = (newPage) => setPage(newPage);
@@ -27,7 +40,7 @@ const SearchPage = () => {
                 {isPending && <LoadingSpinner />}
                 {songs.tracks && <SongsGrid query={query} songs={songs.tracks} /> }
             </StyledSpacer>
-            <PaginationController currentPage={page} songsCount={songs.songsCount} handlePageChange={handlePageChange} />
+            {!isPending && !error && <PaginationController currentPage={page} songsCount={songs.songsCount} handlePageChange={handlePageChange} />}
         </StyledMain>
     )
 }

@@ -16,11 +16,15 @@ const createTrackObject = (track,cover) => {
     }
 }
 
-const createLyricsObject = (lyricsObj) => {
+const createLyricsObject = (lyricsObj, metaObj) => {
+    console.log(metaObj);
     return {
         lyrics: getCleanLyrics(lyricsObj.lyrics_body),
         trackingUrl: lyricsObj.pixel_tracking_url,
-        copyright: lyricsObj.lyrics_copyright
+        copyright: lyricsObj.lyrics_copyright,
+        isExplicit: lyricsObj.explicit,
+        track_name: metaObj.track_name,
+        artist_name: metaObj.artist_name
     }
 }
 
@@ -58,9 +62,12 @@ exports.searchTracks = GlobalTryCatchAsync(async (req, res, next) => {
         let songsCount = query.data.message.header.available;
 
         //API error fix
+        if(songsCount === 0){
+            const error = new ErrorHandler("No results found",200);
+            return next(error);
+        }
+        
         songsCount = (songsCount === 10000) ? 600 : songsCount;
-
-
         const tracks = result.map(track => createTrackObject(track.track));
 
         res.status(200).json({
@@ -88,10 +95,13 @@ exports.getTopUS = GlobalTryCatchAsync(async(req,res,next) => {
 
 exports.getLyrics = GlobalTryCatchAsync(async(req,res,next)=>{
     const track_id = req.params.id;
-    const url = `${prepareURL("track.lyrics.get")}&track_id=${track_id}`;
+    const lyricsUrl = `${prepareURL("track.lyrics.get")}&track_id=${track_id}`;
+    const metaUrl = `${prepareURL("track.get")}&track_id=${track_id}`;
 
-    const query = await axios.get(encodeURI(url));
-    const result = createLyricsObject(query.data.message.body.lyrics);
+    const lyricsQuery = await axios.get(encodeURI(lyricsUrl));
+    const metaQuery = await axios.get(encodeURI(metaUrl));
+    
+    const result = createLyricsObject(lyricsQuery.data.message.body.lyrics, metaQuery.data.message.body.track);
 
     res.status(200).json({
         lyrics: result
