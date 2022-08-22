@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {FiCornerDownLeft} from 'react-icons/fi'
-import {validatePressedLetter,setLetter, ignoreKeyPress} from './LyricsBoard.helper';
+import {validatePressedLetter,setLetter, ignoreKeyPress,calculateProgress} from './LyricsBoard.helper';
 
-function LyricsBoard({lyrics,handlePercentageChange}) {
+function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
   const [lettersComponents, setLettersComponents] = useState([]);
   const [lettersArray, setLetterArray] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -29,15 +29,15 @@ function LyricsBoard({lyrics,handlePercentageChange}) {
   const activeLetterRef = useRef(null);
 
   useEffect(() => {
-    if(lyrics){
+    if(lyrics && lyrics.length){
       const letters = lyrics.split('');
       setLettersRefArray(letters);
     }
   },[lyrics]);
 
   const handleKeyStroke = (e) => {
-    // console.log(e);
     if(ignoreKeyPress(e.key)){
+      fireTest();
       const pressedKey = validatePressedLetter(e.key);
       const isPressedKeyCorrect = pressedKey === lettersRef.current[currentIndexRef.current];
       
@@ -68,12 +68,16 @@ function LyricsBoard({lyrics,handlePercentageChange}) {
   },[]);
 
   useEffect(() => {
-    if(lettersComponents.length > 0 && activeLetterRef.current)
+    //Scroll to active letter
+    if(lettersComponents.length > 0)
       activeLetterRef.current.scrollIntoView({
         behavior: 'smooth',
         block: "center",
         inline: "nearest"
-      });
+    });
+
+    //Update progress bar
+    handlePercentageChange(calculateProgress(currentIndex,lettersArray.length));
   },[lettersComponents]);
 
   return (
@@ -111,7 +115,6 @@ const LyricsPlaceholder = styled.div`
 
   color: var(--color-grey-dark);
   z-index: 1;
-  opacity: .7;
 `;
 
 const Letter = styled.span`

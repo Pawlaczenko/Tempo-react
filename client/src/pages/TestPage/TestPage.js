@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react'
-import {flexCenter} from '../../styles/mixins';
-import {breakpoints} from '../../constants';
+import {ellipsis} from '../../styles/mixins'
 
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import Timer from '../../components/Timer';
-import LyricsBoard, {LyricsBoardWrapper} from '../../components/LyricsBoard';
+import Timer,{StyledTimer} from '../../components/Timer';
+import LyricsBoard from '../../components/LyricsBoard';
 
 const TestPage = () => {
   const {track_id} = useParams();
   const url = `/api/getLyrics/${track_id}`;
 
-  // const [song,isPending, error] = [{track_name: "I Like You feat Doja Cat",artist_name: "Post Malone"},false,null];
   const {data:song,isPending, error} = useFetch({url});
-
   const [progress, setProgress] = useState(0);
+  const [isTestRunning, setIsTestRunning] = useState(false);
+
+  const handlePercentageChange = (percentage) => setProgress(percentage);
+  const fireTest = () => {if(!isTestRunning) setIsTestRunning(true)};
+
+  const headerText = `${song.track_name} - ${song.artist_name}`;
 
   return (
     <StyledMain>
@@ -26,11 +29,12 @@ const TestPage = () => {
       {song && !isPending &&
         <>
           <StyledTestHeader>
-            <StyledHeaderTitle>{song.track_name} - {song.artist_name}</StyledHeaderTitle>
-            <Timer />
+            <StyledHeaderTitle title={headerText}>{headerText}</StyledHeaderTitle>
+            {!isTestRunning && <StyledMessage>Start Typing</StyledMessage>}
+            <Timer isRunning={isTestRunning} />
           </StyledTestHeader>
           <ProgressBar progress={progress} />
-          <LyricsBoard lyrics={song.lyrics} handlePercentageChange={setProgress} />
+          <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} />
           <ProgressBar progress={progress} />
         </> 
       }
@@ -47,15 +51,29 @@ const StyledMain = styled.main`
   flex-direction: column;
 `;
 
+const StyledHeaderTitle = styled.p`
+  font-weight: 300;
+  font-size: 2.1rem;
+  ${ellipsis};
+`;
+
+const StyledMessage = styled.div`
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  text-align: center;
+
+  animation: blink 1.5s ease-in-out infinite;
+`;
+
 const StyledTestHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
 
-const StyledHeaderTitle = styled.p`
-  font-weight: 300;
-  font-size: 2.1rem;
+  ${StyledHeaderTitle} {flex:2;}
+  ${StyledMessage} { flex:1.5;}
+  ${StyledTimer} {flex: 2;}
 `;
 
 const ProgressBar = styled.div`

@@ -19,3 +19,7 @@ export const setLetter = (letter) => {
 export const ignoreKeyPress = (letter) => {
     return !(letter === 'Shift' || letter === 'Control' || letter === 'CapsLock' || letter === 'Alt' || letter === 'AltGraph');
 }
+
+export const calculateProgress = (currentIndex, noOfLetters) => {
+    return (currentIndex / noOfLetters) * 100 || 0;
+}
