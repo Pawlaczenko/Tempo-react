@@ -6,7 +6,6 @@ export const handleKeyStroke = (e,) => {
 
 export const validatePressedLetter = (letter) => {
     if(letter === 'Enter') return '\n';
-
     return letter;
 }
 
@@ -15,4 +14,8 @@ export const setLetter = (letter) => {
     if(letter === '\n') return <><FiCornerDownLeft /><br /></>
 
     return letter;
+}
+
+export const ignoreKeyPress = (letter) => {
+    return !(letter === 'Shift' || letter === 'Control' || letter === 'CapsLock' || letter === 'Alt' || letter === 'AltGraph');
 }

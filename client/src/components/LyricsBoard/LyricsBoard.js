@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {FiCornerDownLeft} from 'react-icons/fi'
-import {validatePressedLetter,setLetter} from './LyricsBoard.helper';
+import {validatePressedLetter,setLetter, ignoreKeyPress} from './LyricsBoard.helper';
 
 function LyricsBoard({lyrics,handlePercentageChange}) {
   const [lettersComponents, setLettersComponents] = useState([]);
@@ -36,29 +36,39 @@ function LyricsBoard({lyrics,handlePercentageChange}) {
   },[lyrics]);
 
   const handleKeyStroke = (e) => {
-    const pressedKey = validatePressedLetter(e.key);
-    const isPressedKeyCorrect = pressedKey === lettersRef.current[currentIndexRef.current];
-    
-    let copy = [...lettersComponentsRef.current];
+    // console.log(e);
+    if(ignoreKeyPress(e.key)){
+      const pressedKey = validatePressedLetter(e.key);
+      const isPressedKeyCorrect = pressedKey === lettersRef.current[currentIndexRef.current];
+      
+      let copy = [...lettersComponentsRef.current];
+      let indexShift = 1;
 
-    const key = `${e.keyCode}-${new Date().getTime()}`;
-    const letter = setLetter(lettersRef.current[currentIndexRef.current]);
-    const letterComponent = <Letter ref={activeLetterRef} correct={isPressedKeyCorrect} key={key} isSpace={e.key === ' '}>{letter}</Letter>;
-    copy.push(letterComponent);
+      if(e.key === "Backspace"){
+        if (lettersComponentsRef.current.length === 0) return;
+        copy.pop();
+        indexShift = -1;
+      } else {
+        const key = `${e.keyCode}-${new Date().getTime()}`;
+        const letter = setLetter(lettersRef.current[currentIndexRef.current]);
+        const letterComponent = <Letter correct={isPressedKeyCorrect} key={key} isSpace={e.key === ' '}>{letter}</Letter>;
+        copy.push(letterComponent);
+      }
 
-    setLettersComponentsRefArray(copy);
-    setCurrentIndexRef(currentIndexRef.current+1);
+      setLettersComponentsRefArray(copy);
+      setCurrentIndexRef(currentIndexRef.current+indexShift);
+    }
   }
 
   useEffect(() => {
-    document.addEventListener("keypress",handleKeyStroke);
+    document.addEventListener("keydown",handleKeyStroke);
     return () => {
-      document.removeEventListener("keypress",handleKeyStroke);
+      document.removeEventListener("keydown",handleKeyStroke);
     }
   },[]);
 
   useEffect(() => {
-    if(lettersComponents.length > 0)
+    if(lettersComponents.length > 0 && activeLetterRef.current)
       activeLetterRef.current.scrollIntoView({
         behavior: 'smooth',
         block: "center",
@@ -72,7 +82,7 @@ function LyricsBoard({lyrics,handlePercentageChange}) {
         {lyrics.split('\n').map(line=><>{line}<FiCornerDownLeft /><br /></>)}
       </LyricsPlaceholder>
       {lettersComponents}
-      <Cursor>_</Cursor>
+      <Cursor ref={activeLetterRef}>_</Cursor>
     </LyricsBoardWrapper>
   )
 }
