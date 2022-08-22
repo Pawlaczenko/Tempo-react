@@ -26,6 +26,11 @@ const GlobalStyle = createGlobalStyle`
         font-family: 'Montserrat', sans-serif;
     }
 
+    .react-icons {
+        vertical-align: middle;
+        display: inline-block;
+    }
+
     ${reset}
 `;
 

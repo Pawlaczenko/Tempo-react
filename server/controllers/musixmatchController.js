@@ -103,9 +103,7 @@ exports.getLyrics = GlobalTryCatchAsync(async(req,res,next)=>{
     
     const result = createLyricsObject(lyricsQuery.data.message.body.lyrics, metaQuery.data.message.body.track);
 
-    res.status(200).json({
-        lyrics: result
-    });
+    res.status(200).json(result);
 });
 
 exports.getAlbumCover = GlobalTryCatchAsync(async(req,res,next)=>{

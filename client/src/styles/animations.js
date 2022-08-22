@@ -10,6 +10,16 @@ const animations = css`
             transform: rotate(360deg);
         }
     }
+
+    @keyframes blink {
+        0%{
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
 `;
 
 export default animations;
