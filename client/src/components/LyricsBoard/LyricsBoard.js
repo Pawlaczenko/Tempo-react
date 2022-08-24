@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import {FiCornerDownLeft} from 'react-icons/fi'
 import {validatePressedLetter,setLetter, ignoreKeyPress,calculateProgress} from './LyricsBoard.helper';
+import LyricsPlaceholder from "./LyricsPlaceholder";
 
 function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
   const [lettersComponents, setLettersComponents] = useState([]);
@@ -37,7 +37,7 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
 
   const handleKeyStroke = (e) => {
     if(ignoreKeyPress(e.key)){
-      fireTest();
+      fireTest(true);
       const pressedKey = validatePressedLetter(e.key);
       const isPressedKeyCorrect = pressedKey === lettersRef.current[currentIndexRef.current];
       
@@ -46,8 +46,8 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
 
       if(e.key === "Backspace"){
         if (lettersComponentsRef.current.length === 0) return;
-        copy.pop();
         indexShift = -1;
+        copy.pop();
       } else {
         const key = `${e.keyCode}-${new Date().getTime()}`;
         const letter = setLetter(lettersRef.current[currentIndexRef.current]);
@@ -76,15 +76,14 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
         inline: "nearest"
     });
 
-    //Update progress bar
-    handlePercentageChange(calculateProgress(currentIndex,lettersArray.length));
+    //Update progress
+    let progress = calculateProgress(currentIndex,lettersArray.length);
+    handlePercentageChange(progress);
   },[lettersComponents]);
 
   return (
     <LyricsBoardWrapper>
-      <LyricsPlaceholder>
-        {lyrics.split('\n').map(line=><>{line}<FiCornerDownLeft /><br /></>)}
-      </LyricsPlaceholder>
+      <LyricsPlaceholder lyrics={lyrics} />
       {lettersComponents}
       <Cursor ref={activeLetterRef}>_</Cursor>
     </LyricsBoardWrapper>
@@ -102,19 +101,6 @@ export const LyricsBoardWrapper = styled.div`
 
   position: relative;
   flex: 1;
-`;
-
-const LyricsPlaceholder = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-
-  width: 100%;
-  height: 100%;
-  padding: inherit;
-
-  color: var(--color-grey-dark);
-  z-index: 1;
 `;
 
 const Letter = styled.span`

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {ellipsis} from '../../styles/mixins'
 
 import styled from 'styled-components';
@@ -18,9 +18,15 @@ const TestPage = () => {
   const [isTestRunning, setIsTestRunning] = useState(false);
 
   const handlePercentageChange = (percentage) => setProgress(percentage);
-  const fireTest = () => {if(!isTestRunning) setIsTestRunning(true)};
+  const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};
 
   const headerText = `${song.track_name} - ${song.artist_name}`;
+
+  useEffect(() => {
+    if(progress === 100){
+      setIsTestRunning(false);
+    }
+  },[progress])
 
   return (
     <StyledMain>

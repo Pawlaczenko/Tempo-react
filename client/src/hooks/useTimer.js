@@ -11,7 +11,6 @@ const useTimer = (isRunning) => {
     const [results, setResults] = useState([0,0]);
 
     useEffect(()=>{
-        console.log("Interval effect")
         let interval;
         if(isRunning){
         interval = setInterval(() => {
@@ -24,7 +23,6 @@ const useTimer = (isRunning) => {
     },[isRunning]);
 
     useEffect(() => {
-        console.log("time effect")
         setResults(calculateTime(time));
     }, [time]);
 
