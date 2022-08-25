@@ -39,7 +39,7 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
     if(ignoreKeyPress(e.key)){
       fireTest(true);
       const pressedKey = validatePressedLetter(e.key);
-      const isPressedKeyCorrect = pressedKey === lettersRef.current[currentIndexRef.current];
+      const isPressedKeyCorrect = (pressedKey === lettersRef.current[currentIndexRef.current]);
       
       let copy = [...lettersComponentsRef.current];
       let indexShift = 1;

@@ -2,12 +2,13 @@ import React, { useState,useEffect } from 'react'
 import {ellipsis} from '../../styles/mixins'
 
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
 import LyricsBoard from '../../components/LyricsBoard';
+import { generateSummaryData } from './TestPage.helper';
 
 const TestPage = () => {
   const {track_id} = useParams();
@@ -16,6 +17,7 @@ const TestPage = () => {
   const {data:song,isPending, error} = useFetch({url});
   const [progress, setProgress] = useState(0);
   const [isTestRunning, setIsTestRunning] = useState(false);
+  const navigate = useNavigate();
 
   const handlePercentageChange = (percentage) => setProgress(percentage);
   const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};
@@ -25,8 +27,10 @@ const TestPage = () => {
   useEffect(() => {
     if(progress === 100){
       setIsTestRunning(false);
+      const summaryData = generateSummaryData({});
+      navigate('/summary',summaryData)
     }
-  },[progress])
+  },[progress]);
 
   return (
     <StyledMain>
