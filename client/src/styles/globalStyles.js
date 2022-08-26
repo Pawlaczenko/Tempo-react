@@ -28,7 +28,7 @@ const GlobalStyle = createGlobalStyle`
 
     .react-icons {
         vertical-align: middle;
-        display: inline-block;
+        display: inline;
     }
 
     ${reset}

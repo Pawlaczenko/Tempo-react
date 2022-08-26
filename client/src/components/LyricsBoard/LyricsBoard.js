@@ -1,91 +1,71 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import {validatePressedLetter,setLetter, ignoreKeyPress,calculateProgress} from './LyricsBoard.helper';
 import LyricsPlaceholder from "./LyricsPlaceholder";
+import {checkForEnter,replaceWhitespaceCharacters, isNotFunctionKey,calculateProgress, generateUniqueKey} from './LyricsBoard.helper';
+import {scrollBehaviour} from '../../constants';
 
 function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
   const [lettersComponents, setLettersComponents] = useState([]);
-  const [lettersArray, setLetterArray] = useState([]);
+  const [lettersArray, setLettersArray] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const lettersRef = useRef(lettersArray);
-  const setLettersRefArray = (letters) => {
-    lettersRef.current = [...letters];
-    setLetterArray([...letters]);
-  }
+  const cursorRef = useRef(null);
+  const lyricsBoardRef = useRef(null);
 
-  const lettersComponentsRef = useRef(lettersComponents);
-  const setLettersComponentsRefArray = (letters) => {
-    lettersComponentsRef.current = [...letters];
-    setLettersComponents([...letters]);
-  }
-
-  const currentIndexRef = useRef(currentIndex);
-  const setCurrentIndexRef = (index) => {
-    currentIndexRef.current = index;
-    setCurrentIndex(index);
-  }
-
-  const activeLetterRef = useRef(null);
+  const getCurrentLetter = () => replaceWhitespaceCharacters(lettersArray[currentIndex]);
+  const validatePressedLetter = (pressedLetter) => pressedLetter === lettersArray[currentIndex];
 
   useEffect(() => {
+    //Split lyrics into array of characters
     if(lyrics && lyrics.length){
       const letters = lyrics.split('');
-      setLettersRefArray(letters);
+      setLettersArray(letters);
     }
   },[lyrics]);
 
-  const handleKeyStroke = (e) => {
-    if(ignoreKeyPress(e.key)){
-      fireTest(true);
-      const pressedKey = validatePressedLetter(e.key);
-      const isPressedKeyCorrect = (pressedKey === lettersRef.current[currentIndexRef.current]);
-      
-      let copy = [...lettersComponentsRef.current];
-      let indexShift = 1;
-
-      if(e.key === "Backspace"){
-        if (lettersComponentsRef.current.length === 0) return;
-        indexShift = -1;
-        copy.pop();
-      } else {
-        const key = `${e.keyCode}-${new Date().getTime()}`;
-        const letter = setLetter(lettersRef.current[currentIndexRef.current]);
-        const letterComponent = <Letter correct={isPressedKeyCorrect} key={key} isSpace={e.key === ' '}>{letter}</Letter>;
-        copy.push(letterComponent);
-      }
-
-      setLettersComponentsRefArray(copy);
-      setCurrentIndexRef(currentIndexRef.current+indexShift);
-    }
-  }
-
   useEffect(() => {
-    document.addEventListener("keydown",handleKeyStroke);
-    return () => {
-      document.removeEventListener("keydown",handleKeyStroke);
-    }
+    lyricsBoardRef.current.focus();
   },[]);
 
   useEffect(() => {
     //Scroll to active letter
-    if(lettersComponents.length > 0)
-      activeLetterRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: "center",
-        inline: "nearest"
-    });
+    cursorRef.current.scrollIntoView(scrollBehaviour);
 
     //Update progress
     let progress = calculateProgress(currentIndex,lettersArray.length);
     handlePercentageChange(progress);
-  },[lettersComponents]);
+  },[currentIndex]);
+
+    const handleKeyStroke = (e) => {
+    if(isNotFunctionKey(e.key)){
+      fireTest(true);
+      const pressedKey = checkForEnter(e.key);
+      const isPressedKeyCorrect = validatePressedLetter(pressedKey);
+      
+      let copy = [...lettersComponents];
+      let indexShift = 1;
+
+      if(e.key === "Backspace"){
+        if (lettersComponents.length === 0) return;
+        indexShift = -1;
+        copy.pop();
+      } else {
+        const key = generateUniqueKey(e.keyCode);
+        const letter = getCurrentLetter();
+        const letterComponent = <Letter correct={isPressedKeyCorrect} key={key} isSpace={e.key === ' '}>{letter}</Letter>;
+        copy.push(letterComponent);
+      }
+
+      setLettersComponents(copy);
+      setCurrentIndex(currentIndex+indexShift);
+    }
+  }
 
   return (
-    <LyricsBoardWrapper>
+    <LyricsBoardWrapper onKeyDown={handleKeyStroke} tabIndex={0} ref={lyricsBoardRef}>
       <LyricsPlaceholder lyrics={lyrics} />
       {lettersComponents}
-      <Cursor ref={activeLetterRef}>_</Cursor>
+      <Cursor ref={cursorRef}>_</Cursor>
     </LyricsBoardWrapper>
   )
 }
@@ -97,7 +77,7 @@ export const LyricsBoardWrapper = styled.div`
 
   background: white;
   padding: 2rem 3rem;
-  overflow: hidden;
+  overflow-y: hidden;
 
   position: relative;
   flex: 1;
@@ -109,6 +89,7 @@ const Letter = styled.span`
     background-color: var(--letter-background);
     z-index: 2;
     position: relative;
+    display: inline-block;
 `;
 
 const Cursor = styled.span`

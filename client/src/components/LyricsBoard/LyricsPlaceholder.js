@@ -6,13 +6,13 @@ const LyricsPlaceholder = ({lyrics}) => {
     const [lines, setLines] = useState([]);
 
     useEffect(() => {
-        const lyricsLines = lyrics.split('\n').map((line,i, arr) => {
+        const lyricsLines = lyrics.split('\n').map((line, i, arr) => {
             return (
-            <>
+            <span key={i}>
                 {line}
                 {i !== arr.length-1 && <FiCornerDownLeft />}
                 <br />
-            </>
+            </span>
             );
         });
         setLines(lyricsLines);
@@ -36,6 +36,7 @@ const StyledLyricsPlaceholder = styled.div`
 
   color: var(--color-grey-dark);
   z-index: 1;
+  /* word-break: break-all; */
 `;
 
 export default LyricsPlaceholder
