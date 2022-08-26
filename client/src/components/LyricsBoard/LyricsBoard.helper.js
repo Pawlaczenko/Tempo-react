@@ -1,25 +1,22 @@
 import {FiCornerDownLeft} from 'react-icons/fi'
 
-export const handleKeyStroke = (e,) => {
-    console.log(e.key);
+export const checkForEnter = (letter) => {
+    return (letter === 'Enter') ? '\n' : letter;
 }
 
-export const validatePressedLetter = (letter) => {
-    if(letter === 'Enter') return '\n';
-    return letter;
-}
-
-export const setLetter = (letter) => {
+export const replaceWhitespaceCharacters = (letter) => {
     if(letter === ' ') return '_';
     if(letter === '\n') return <><FiCornerDownLeft /><br /></>
 
     return letter;
 }
 
-export const ignoreKeyPress = (letter) => {
-    return !(letter === 'Shift' || letter === 'Control' || letter === 'CapsLock' || letter === 'Alt' || letter === 'AltGraph');
+export const isNotFunctionKey = (letter) => {
+    return !['Shift', 'Control', 'CapsLock', 'Alt', 'AltGraph','Tab'].includes(letter);
 }
 
 export const calculateProgress = (currentIndex, noOfLetters) => {
     return (currentIndex / noOfLetters) * 100 || 0;
 }
+
+export const generateUniqueKey = (keyCode) => `${keyCode}-${new Date().getTime()}`;

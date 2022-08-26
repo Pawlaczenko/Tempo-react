@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import {ellipsis} from '../../styles/mixins'
 
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
 import LyricsBoard from '../../components/LyricsBoard';
+import { generateSummaryData } from './TestPage.helper';
+import { breakpoints } from '../../constants';
 
 const TestPage = () => {
   const {track_id} = useParams();
@@ -16,11 +18,20 @@ const TestPage = () => {
   const {data:song,isPending, error} = useFetch({url});
   const [progress, setProgress] = useState(0);
   const [isTestRunning, setIsTestRunning] = useState(false);
+  const navigate = useNavigate();
 
   const handlePercentageChange = (percentage) => setProgress(percentage);
-  const fireTest = () => {if(!isTestRunning) setIsTestRunning(true)};
+  const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};
 
   const headerText = `${song.track_name} - ${song.artist_name}`;
+
+  useEffect(() => {
+    if(progress === 100){
+      setIsTestRunning(false);
+      const summaryData = generateSummaryData({});
+      navigate('/summary',summaryData)
+    }
+  },[progress]);
 
   return (
     <StyledMain>
@@ -33,7 +44,6 @@ const TestPage = () => {
             {!isTestRunning && <StyledMessage>Start Typing</StyledMessage>}
             <Timer isRunning={isTestRunning} />
           </StyledTestHeader>
-          <ProgressBar progress={progress} />
           <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} />
           <ProgressBar progress={progress} />
         </> 
@@ -49,6 +59,10 @@ const StyledMain = styled.main`
 
   display: flex;
   flex-direction: column;
+
+  @media only screen and (${breakpoints.small}){
+      padding: 0 .5rem;
+  }
 `;
 
 const StyledHeaderTitle = styled.p`
@@ -78,7 +92,7 @@ const StyledTestHeader = styled.div`
 
 const ProgressBar = styled.div`
   width: 100%;
-  height: 3px;
+  height: 5px;
   position: relative;
   background-color: var(--color-grey-lightest);
 
