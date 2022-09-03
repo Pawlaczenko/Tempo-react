@@ -4,9 +4,11 @@ import styled from 'styled-components'
 import defaultImage from '../../assets/images/defaultAlbumImage.svg';
 import {ellipsis} from '../../styles/mixins'
 import { breakpoints } from '../../constants';
+import { useNavigate } from 'react-router-dom';
 
 const SongTile = ({song}) => {
     const [songCover,setSongCover] = useState(defaultImage);
+    const navigate = useNavigate();
 
     useEffect(()=> {
         fetch(`/api/getAlbumCover?album=${song.album_name}&artist=${song.artist_id}`)
@@ -14,8 +16,13 @@ const SongTile = ({song}) => {
             .then((data) => setSongCover(data.data));   
     },[song]);
 
+    const handleClick = (e) => {
+        e.preventDefault();
+        navigate(`/test/${song.track_id}`);
+    }
+
   return (
-    <StyledSongTile>
+    <StyledSongTile onClick={handleClick}>
         <StyledImage>
             <img src={songCover || defaultImage} alt={song.album_name + " cover image"} />
         </StyledImage>
@@ -28,19 +35,19 @@ const SongTile = ({song}) => {
   )
 }
 
-const StyledSongTile = styled.div`
+const StyledSongTile = styled.button`
     --cover-size: 15rem;
+    --text-color: var(--color-grey-dark);
+    
     display: grid;
     grid-template-columns: var(--cover-size) 1fr;
     grid-template-rows: var(--cover-size);
     position: relative;
+    
     cursor: pointer;
-    --text-color: var(--color-grey-dark);
-
-    @media only screen and (${breakpoints.extra_small}){
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-    }
+    background-color: transparent;
+    border: none;
+    padding: 0;
 
     &:after,
     &:before{
@@ -75,6 +82,11 @@ const StyledSongTile = styled.div`
             border-color: var(--color-primary);
         }
     }
+
+    @media only screen and (${breakpoints.extra_small}){
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
 `;
 
 const StyledImage = styled.figure`
@@ -90,6 +102,7 @@ const StyledImage = styled.figure`
 
 const StyledMeta = styled.div`
     padding: 1rem 1.5rem;
+    text-align: left;
 `;
 
 const StyledTitle = styled.p`
