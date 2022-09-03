@@ -5,3 +5,9 @@ export const breakpoints = {
     phone: `max-width:470px`,
     extra_small: `max-width:360px`,
 }
+
+export const scrollBehaviour = {
+    behavior: 'smooth',
+    block: "center",
+    inline: "nearest"
+}

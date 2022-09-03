@@ -9,6 +9,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
 import LyricsBoard from '../../components/LyricsBoard';
 import { generateSummaryData } from './TestPage.helper';
+import { breakpoints } from '../../constants';
 
 const TestPage = () => {
   const {track_id} = useParams();
@@ -43,7 +44,6 @@ const TestPage = () => {
             {!isTestRunning && <StyledMessage>Start Typing</StyledMessage>}
             <Timer isRunning={isTestRunning} />
           </StyledTestHeader>
-          <ProgressBar progress={progress} />
           <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} />
           <ProgressBar progress={progress} />
         </> 
@@ -59,6 +59,10 @@ const StyledMain = styled.main`
 
   display: flex;
   flex-direction: column;
+
+  @media only screen and (${breakpoints.small}){
+      padding: 0 .5rem;
+  }
 `;
 
 const StyledHeaderTitle = styled.p`
@@ -88,7 +92,7 @@ const StyledTestHeader = styled.div`
 
 const ProgressBar = styled.div`
   width: 100%;
-  height: 3px;
+  height: 5px;
   position: relative;
   background-color: var(--color-grey-lightest);
 
