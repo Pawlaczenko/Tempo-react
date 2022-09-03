@@ -8,11 +8,11 @@ const LyricsPlaceholder = ({lyrics}) => {
     useEffect(() => {
         const lyricsLines = lyrics.split('\n').map((line,i, arr) => {
             return (
-            <>
-                {line}
+            <span>
+                {line.replaceAll(' ','\u00A0')}
                 {i !== arr.length-1 && <FiCornerDownLeft />}
                 <br />
-            </>
+            </span>
             );
         });
         setLines(lyricsLines);

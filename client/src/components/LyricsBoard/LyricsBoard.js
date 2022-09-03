@@ -101,6 +101,7 @@ export const LyricsBoardWrapper = styled.div`
 
   position: relative;
   flex: 1;
+  overflow-wrap: break-word;
 `;
 
 const Letter = styled.span`
@@ -115,6 +116,7 @@ const Cursor = styled.span`
   color: transparent;
   border-bottom: 2px solid black;
   animation: blink 1s ease infinite;
+  /* position: absolute; */
 `;
 
 export default LyricsBoard;
