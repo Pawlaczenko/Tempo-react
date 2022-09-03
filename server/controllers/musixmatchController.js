@@ -17,7 +17,6 @@ const createTrackObject = (track,cover) => {
 }
 
 const createLyricsObject = (lyricsObj, metaObj) => {
-    console.log(metaObj);
     return {
         lyrics: getCleanLyrics(lyricsObj.lyrics_body),
         trackingUrl: lyricsObj.pixel_tracking_url,
@@ -55,7 +54,7 @@ exports.searchTracks = GlobalTryCatchAsync(async (req, res, next) => {
         const searchParams = req.query.search || "";
         const page = req.query.page || 1;
 
-        const url = `${prepareURL("track.search",page)}&q_track_artist=${searchParams}&f_has_lyrics=1&s_track_rating=desc`;
+        const url = `${prepareURL("track.search",page)}&q_track_artist=${searchParams}&s_track_rating=desc&f_has_lyrics=1&f_is_instrumental=0`;
 
         const query = await axios.get(encodeURI(url));
         const result = query.data.message.body.track_list;
@@ -77,22 +76,6 @@ exports.searchTracks = GlobalTryCatchAsync(async (req, res, next) => {
     }
 );
 
-exports.getTopUS = GlobalTryCatchAsync(async(req,res,next) => {
-    const page = req.query.page || 1;
-    const url = `${prepareURL("chart.tracks.get",page)}&f_has_lyrics=1`;
-
-    const query = await axios.get(encodeURI(url));
-    const result = query.data.message.body.track_list;
-    const songsCount = query.data.message.header.available;
-
-    const tracks = result.map(track => createTrackObject(track.track));
-
-    res.status(200).json({
-        tracks: tracks,
-        songsCount: songsCount
-    });
-});
-
 exports.getLyrics = GlobalTryCatchAsync(async(req,res,next)=>{
     const track_id = req.params.id;
     const lyricsUrl = `${prepareURL("track.lyrics.get")}&track_id=${track_id}`;
@@ -102,6 +85,11 @@ exports.getLyrics = GlobalTryCatchAsync(async(req,res,next)=>{
     const metaQuery = await axios.get(encodeURI(metaUrl));
     
     const result = createLyricsObject(lyricsQuery.data.message.body.lyrics, metaQuery.data.message.body.track);
+
+    if(result.lyrics.length === 0) {
+        const error = new ErrorHandler(result.copyright,200);
+        return next(error);
+    }
 
     res.status(200).json(result);
 });

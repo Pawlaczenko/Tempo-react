@@ -47,11 +47,7 @@ const StyledSongTile = styled.button`
     cursor: pointer;
     background-color: transparent;
     border: none;
-
-    @media only screen and (${breakpoints.extra_small}){
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-    }
+    padding: 0;
 
     &:after,
     &:before{
@@ -85,6 +81,11 @@ const StyledSongTile = styled.button`
             border-width: 5px;
             border-color: var(--color-primary);
         }
+    }
+
+    @media only screen and (${breakpoints.extra_small}){
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
     }
 `;
 

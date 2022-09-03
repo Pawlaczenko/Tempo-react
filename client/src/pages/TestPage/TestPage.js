@@ -37,7 +37,7 @@ const TestPage = () => {
     <StyledMain>
       {error && <ErrorMessage message={error} />}
       {isPending && <LoadingSpinner />}
-      {song && !isPending &&
+      {song && !isPending && !error &&
         <>
           <StyledTestHeader>
             <StyledHeaderTitle title={headerText}>{headerText}</StyledHeaderTitle>
@@ -45,7 +45,7 @@ const TestPage = () => {
             <Timer isRunning={isTestRunning} />
           </StyledTestHeader>
           <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} />
-          <ProgressBar progress={progress} />
+          <ProgressBar style={{"--progress-value": `${progress}%`}} />
         </> 
       }
     </StyledMain>
@@ -78,6 +78,10 @@ const StyledMessage = styled.div`
   text-align: center;
 
   animation: blink 1.5s ease-in-out infinite;
+
+  @media only screen and (${breakpoints.small}){
+      font-size: 1.5rem;
+  }
 `;
 
 const StyledTestHeader = styled.div`
@@ -102,7 +106,7 @@ const ProgressBar = styled.div`
     left: 0;
     top: 0;
     height: 100%;
-    width: ${(props) => props.progress || 0}%;
+    width: var(--progress-value);
 
     background-color: var(--color-primary);
     transition: width .1s ease-in-out;

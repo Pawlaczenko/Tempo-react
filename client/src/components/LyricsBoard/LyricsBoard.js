@@ -15,20 +15,21 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
   const getCurrentLetter = () => replaceWhitespaceCharacters(lettersArray[currentIndex]);
   const validatePressedLetter = (pressedLetter) => pressedLetter === lettersArray[currentIndex];
 
+  //Split lyrics into array of characters
   useEffect(() => {
-    //Split lyrics into array of characters
     if(lyrics && lyrics.length){
       const letters = lyrics.split('');
       setLettersArray(letters);
     }
   },[lyrics]);
 
+  //Focus the board on start
   useEffect(() => {
     lyricsBoardRef.current.focus();
   },[]);
 
   useEffect(() => {
-    //Scroll to active letter
+    //Scroll to cursor
     cursorRef.current.scrollIntoView(scrollBehaviour);
 
     //Update progress
@@ -36,7 +37,7 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
     handlePercentageChange(progress);
   },[currentIndex]);
 
-    const handleKeyStroke = (e) => {
+  const handleKeyStroke = (e) => {
     if(isNotFunctionKey(e.key)){
       fireTest(true);
       const pressedKey = checkForEnter(e.key);
@@ -77,7 +78,7 @@ export const LyricsBoardWrapper = styled.div`
 
   background: white;
   padding: 2rem 3rem;
-  overflow-y: hidden;
+  overflow: hidden;
 
   position: relative;
   flex: 1;
@@ -90,14 +91,12 @@ const Letter = styled.span`
     background-color: var(--letter-background);
     z-index: 2;
     position: relative;
-    display: inline-block;
 `;
 
 const Cursor = styled.span`
   color: transparent;
   border-bottom: 2px solid black;
   animation: blink 1s ease infinite;
-  /* position: absolute; */
 `;
 
 export default LyricsBoard;
