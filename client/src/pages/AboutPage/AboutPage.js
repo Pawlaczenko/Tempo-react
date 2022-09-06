@@ -3,7 +3,7 @@ import Heading from '../../components/Heading'
 import styled from 'styled-components';
 import equation from '../../assets/images/equation.png';
 import TopInUsButton from '../../components/Button/TopInUsButton';
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 
 const AboutPage = () => {
   return (
@@ -38,7 +38,7 @@ const StyledMain = styled.main`
     "heading cta"
     "paragraphs cta";
 
-    @media only screen and (${breakpoints.medium}){
+    @media only screen and (${BREAKPOINTS.medium}){
       grid-template-columns: 100%;
       grid-template-areas:
       "heading"
@@ -87,7 +87,7 @@ const StyledParagraph = styled.p`
     background-color: var(--color-primary);
   }
 
-  @media only screen and (${breakpoints.medium}){
+  @media only screen and (${BREAKPOINTS.medium}){
       margin: 2rem 0;
     }
 `;
@@ -102,7 +102,7 @@ const StyledEqation = styled.figure`
       width: 80%;
     }
 
-    @media only screen and (${breakpoints.medium}){
+    @media only screen and (${BREAKPOINTS.medium}){
       width: 100%;
 
       & > img {

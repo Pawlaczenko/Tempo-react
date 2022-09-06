@@ -9,7 +9,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
 import LyricsBoard from '../../components/LyricsBoard';
 import { generateSummaryData } from './TestPage.helper';
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 
 const TestPage = () => {
   const {track_id} = useParams();
@@ -60,7 +60,7 @@ const StyledMain = styled.main`
   display: flex;
   flex-direction: column;
 
-  @media only screen and (${breakpoints.small}){
+  @media only screen and (${BREAKPOINTS.small}){
       padding: 0 .5rem;
   }
 `;
@@ -79,7 +79,7 @@ const StyledMessage = styled.div`
 
   animation: blink 1.5s ease-in-out infinite;
 
-  @media only screen and (${breakpoints.small}){
+  @media only screen and (${BREAKPOINTS.small}){
       font-size: 1.5rem;
   }
 `;

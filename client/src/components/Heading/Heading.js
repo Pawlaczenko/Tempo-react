@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import {breakpoints} from '../../constants';
+import {BREAKPOINTS} from '../../constants';
 
 function Heading({level=1,children}) {
   const hedingLevel = `h${level}`;
@@ -33,7 +33,7 @@ const StyledHeading = styled.h1`
       font-weight: 700;
     }
 
-    @media only screen and (${breakpoints.extra_small}){
+    @media only screen and (${BREAKPOINTS.extra_small}){
         font-size: 2rem;
     }
   }

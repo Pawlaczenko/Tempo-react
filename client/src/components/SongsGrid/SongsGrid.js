@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import SongTile from "./SongTile";
-import {breakpoints} from '../../constants';
+import {BREAKPOINTS} from '../../constants';
 
 function SongsGrid({query,songs}) {
   return (
@@ -22,11 +22,11 @@ const StyledGrid = styled.div`
   padding: 0 8rem;
   margin-top: 3rem;
 
-  @media only screen and (${breakpoints.small}){
+  @media only screen and (${BREAKPOINTS.small}){
     padding: 0;
   }
 
-  @media only screen and (${breakpoints.extra_small}){
+  @media only screen and (${BREAKPOINTS.extra_small}){
     grid-template-columns: 80%;
     justify-content: center;
   }

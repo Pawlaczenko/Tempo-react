@@ -20,3 +20,10 @@ export const calculateProgress = (currentIndex, noOfLetters) => {
 }
 
 export const generateUniqueKey = (keyCode) => `${keyCode}-${new Date().getTime()}`;
+
+export const generateTypingErrorObject = (index,state="uncorrected") => {
+    return {
+        index: index, 
+        state: state
+    }
+};

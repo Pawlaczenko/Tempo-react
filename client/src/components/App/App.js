@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {absoluteCenter} from '../../styles/mixins';
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 import scrollbar from '../../styles/scrollbar';
  
 import Header from '../Header';
@@ -35,13 +35,13 @@ const Wrapper = styled.div`
     grid-template-rows: auto 1fr;
     row-gap: 5rem;
 
-    @media only screen and (${breakpoints.medium}){
+    @media only screen and (${BREAKPOINTS.medium}){
       border-radius: 0;
       width: 100%;
       height: 100%;
     }
 
-    @media only screen and (${breakpoints.small}){
+    @media only screen and (${BREAKPOINTS.small}){
       padding: 3rem 2rem;
     }
 `;

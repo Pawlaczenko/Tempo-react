@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import NavigationItem from './NavigationItem';
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 
 const Navigation = () => {
   return (
@@ -19,7 +19,7 @@ export const StyledNavigation = styled.nav`
     gap: 2.5rem;
     font-size: 2rem;
 
-    @media only screen and (${breakpoints.burger}){
+    @media only screen and (${BREAKPOINTS.burger}){
       flex-direction: column;
       font-size: 3rem;
   }

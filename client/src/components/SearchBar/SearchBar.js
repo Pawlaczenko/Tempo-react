@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import {FiSearch} from "react-icons/fi";
 import {flexCenter} from "../../styles/mixins";
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 
 import { useNavigate } from "react-router-dom";
 
@@ -48,7 +48,7 @@ const Wrapper = styled.form`
     transition: transform .2s ease;
   }
 
-  @media only screen and (${breakpoints.phone}){
+  @media only screen and (${BREAKPOINTS.phone}){
     width: 100%;
   } 
 `;

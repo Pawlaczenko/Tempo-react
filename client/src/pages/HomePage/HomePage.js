@@ -3,7 +3,7 @@ import TopInUsButton from '../../components/Button/TopInUsButton'
 import Heading from '../../components/Heading'
 import SearchBar from '../../components/SearchBar'
 import {flexCenter} from '../../styles/mixins';
-import {breakpoints} from '../../constants';
+import {BREAKPOINTS} from '../../constants';
 
 import styled from 'styled-components';
 
@@ -43,7 +43,7 @@ const CTAs = styled.div`
   flex-direction: column;
   gap: 1.5rem;
 
-  @media only screen and (${breakpoints.phone}){
+  @media only screen and (${BREAKPOINTS.phone}){
     width: 100%;
   } 
 `;

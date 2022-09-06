@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import defaultImage from '../../assets/images/defaultAlbumImage.svg';
 import {ellipsis} from '../../styles/mixins'
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 
 const SongTile = ({song}) => {
@@ -83,7 +83,7 @@ const StyledSongTile = styled.button`
         }
     }
 
-    @media only screen and (${breakpoints.extra_small}){
+    @media only screen and (${BREAKPOINTS.extra_small}){
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
     }

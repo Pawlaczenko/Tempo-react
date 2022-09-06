@@ -1,4 +1,4 @@
-export const breakpoints = {
+export const BREAKPOINTS = {
     medium: `max-width:950px`,
     burger: `max-width:850px`,
     small: `max-width:550px`,
@@ -6,8 +6,13 @@ export const breakpoints = {
     extra_small: `max-width:360px`,
 }
 
-export const scrollBehaviour = {
+export const SCROLL_BEHAVIOUR = {
     behavior: 'smooth',
     block: "center",
     inline: "nearest"
+}
+
+export const TYPING_ERROR_STATES = {
+    CORRECT: 'corrected',
+    UNCORRECT: 'uncorrected'
 }
