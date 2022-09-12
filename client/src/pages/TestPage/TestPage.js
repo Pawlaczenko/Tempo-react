@@ -8,8 +8,8 @@ import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
 import LyricsBoard from '../../components/LyricsBoard';
-import { generateSummaryData } from './TestPage.helper';
 import { BREAKPOINTS } from '../../constants';
+import useTimer from '../../hooks/useTimer';
 
 const TestPage = () => {
   const {track_id} = useParams();
@@ -18,20 +18,18 @@ const TestPage = () => {
   const {data:song,isPending, error} = useFetch({url});
   const [progress, setProgress] = useState(0);
   const [isTestRunning, setIsTestRunning] = useState(false);
+  const [minutes,seconds] = useTimer(isTestRunning);
   const navigate = useNavigate();
 
   const handlePercentageChange = (percentage) => setProgress(percentage);
+  const endTest = (data) => {
+    setIsTestRunning(false);
+    const summaryData = {...data, time: {minutes,seconds}, artist:song.artist_name, track: song.track_name };
+    navigate('/summary',{state:{...summaryData}})
+  }
   const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};
 
   const headerText = `${song.track_name} - ${song.artist_name}`;
-
-  useEffect(() => {
-    if(progress === 100){
-      setIsTestRunning(false);
-      const summaryData = generateSummaryData({});
-      navigate('/summary',summaryData)
-    }
-  },[progress]);
 
   return (
     <StyledMain>
@@ -42,9 +40,9 @@ const TestPage = () => {
           <StyledTestHeader>
             <StyledHeaderTitle title={headerText}>{headerText}</StyledHeaderTitle>
             {!isTestRunning && <StyledMessage>Start Typing</StyledMessage>}
-            <Timer isRunning={isTestRunning} />
+            <Timer time={{minutes, seconds}} />
           </StyledTestHeader>
-          <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} />
+          <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} endTest={endTest} />
           <ProgressBar style={{"--progress-value": `${progress}%`}} />
         </> 
       }

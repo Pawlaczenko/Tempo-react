@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import LyricsPlaceholder from "./LyricsPlaceholder";
-import {checkForEnter,replaceWhitespaceCharacters, isNotFunctionKey,calculateProgress, generateUniqueKey, generateTypingErrorObject} from './LyricsBoard.helper';
+import {
+  checkForEnter,
+  replaceWhitespaceCharacters, 
+  isNotFunctionKey,
+  calculateProgress, 
+  generateUniqueKey, 
+  generateTypingErrorObject
+} from './LyricsBoard.helper';
 import {SCROLL_BEHAVIOUR, TYPING_ERROR_STATES} from '../../constants';
 
-function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
+function LyricsBoard({lyrics,handlePercentageChange,fireTest,endTest}) {
   const [lettersComponents, setLettersComponents] = useState([]);
   const [lettersArray, setLettersArray] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -16,10 +23,9 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
   const getCurrentLetter = () => replaceWhitespaceCharacters(lettersArray[currentIndex]);
   const validatePressedLetter = (pressedLetter) => (pressedLetter === lettersArray[currentIndex] || pressedLetter==='Backspace');
   const handleTypingError = (index, state = TYPING_ERROR_STATES.UNCORRECT) => {
-    let copy = [...typingErrors];
-    const foundIndex = copy.findIndex(err => err.index === index);
-
+    const foundIndex = typingErrors.findIndex(err => err.index === index);
     if(foundIndex >= 0) {
+      let copy = [...typingErrors];
       copy[foundIndex].state = state;
       setTypingErrors(copy);
     } else if (state===TYPING_ERROR_STATES.UNCORRECT) {
@@ -47,6 +53,10 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
     //Update progress
     let progress = calculateProgress(currentIndex,lettersArray.length);
     handlePercentageChange(progress);
+    if(progress === 100){
+      const summaryData = {errors: typingErrors, noOfLetters: lettersArray.length};
+      endTest(summaryData);
+    }
   },[currentIndex]);
 
   const handleKeyStroke = (e) => {
@@ -73,7 +83,7 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
       }
 
       setLettersComponents(copy);
-      setCurrentIndex(currentIndex+indexShift);
+      setCurrentIndex(index => index + indexShift);
     }
   }
 

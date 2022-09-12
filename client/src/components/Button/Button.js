@@ -34,4 +34,9 @@ export const BlueButton = styled(StyledButton)`
   color: white;
 `;
 
+export const PrimaryButton = styled(StyledButton)`
+  --button-color: var(--color-primary);
+  color: white;
+`;
+
 

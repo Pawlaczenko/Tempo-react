@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import useTimer from "../../hooks/useTimer";
 
-function Timer({isRunning}) {
-  const [minutes, seconds] = useTimer(isRunning);
+function Timer({time}) {
 
   return <StyledTimer>
-          {String(minutes).padStart(2,'0')}
+          {String(time.minutes).padStart(2,'0')}
           :
-          {String(seconds).padStart(2,'0')}
+          {String(time.seconds).padStart(2,'0')}
         </StyledTimer>
 }
 

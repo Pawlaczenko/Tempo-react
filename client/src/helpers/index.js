@@ -1,0 +1,1 @@
+export const addLeadingZeros = (number, places=2) => String(number).padStart(places, '0');
