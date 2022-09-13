@@ -1,1 +1,2 @@
 export const addLeadingZeros = (number, places=2) => String(number).padStart(places, '0');
+export const unCamelString = (string) => string.split(/(?=[A-Z])/).map(word => word[0].toUpperCase() + word.slice(1)).join(' ');

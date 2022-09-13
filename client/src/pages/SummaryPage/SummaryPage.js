@@ -5,6 +5,7 @@ import SummaryTable from '../../components/SummaryTable';
 import {BlueButton,PrimaryButton} from '../../components/Button';
 import {FiHome,FiRepeat} from 'react-icons/fi';
 import {TYPING_ERROR_STATES} from '../../constants';
+import {addLeadingZeros} from '../../helpers';
 
 import {calculateNetWPM,calculateAccuracy, getWordsCount, getErrorsCount} from './SummaryPage.helper';
 
@@ -25,19 +26,22 @@ const SummaryPage = () => {
 
     const tableData = {
       typedCharacters: location.state.noOfLetters,
-      typedWords: no_of_words,
-      time: location.state.time,
-      accuracy: accuracy,
-      errors: typingErrors,
-      wpm: wpm
+      typedWords: Math.ceil(no_of_words),
+      time: `${addLeadingZeros(location.state.time.minutes)}:${addLeadingZeros(location.state.time.seconds)}`,
+      accuracy: `${accuracy}%`,
+      correctedErrors: typingErrors.corrected,
+      uncorrectedErrors: typingErrors.uncorrected,
+      wordsPerMinute: wpm
     };
     setSummaryData(tableData);
   }, [location]);
 
   return (
     <StyledMain>
-        <Heading level={2}>Summary</Heading>
-        <StyledSongInfo>{location.state.artist} - {location.state.track}</StyledSongInfo>
+        <div>
+          <Heading level={2}>Summary</Heading>
+          <StyledSongInfo>{location.state.artist} - {location.state.track}</StyledSongInfo>
+        </div>
         {Object.keys(summaryData).length && <SummaryTable data={summaryData} />}
         <StyledButtonContainer>
           <BlueButton> <FiRepeat /> Try again</BlueButton>
@@ -51,7 +55,7 @@ const StyledMain = styled.main`
   display: flex;
   flex-direction:column;
   align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: 100%;
 `;
 
