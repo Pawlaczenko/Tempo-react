@@ -21,18 +21,18 @@ const SongTile = ({song}) => {
         navigate(`/test/${song.track_id}`);
     }
 
-  return (
-    <StyledSongTile onClick={handleClick}>
-        <StyledImage>
-            <img src={songCover || defaultImage} alt={song.album_name + " cover image"} />
-        </StyledImage>
-        <StyledMeta>
-            <StyledTitle rows="2" title={song.track_name}>{song.track_name}</StyledTitle>
-            <StyledAuthor rows="1" title={song.artist_name}>{song.artist_name}</StyledAuthor>
-            {song.explicit === 1 && <StyledExplicit title="This song contains explicit lyrics.">!</StyledExplicit>}
-        </StyledMeta>
-    </StyledSongTile>
-  )
+    return (
+        <StyledSongTile onClick={handleClick}>
+            <StyledImage>
+                <img src={songCover || defaultImage} alt={song.album_name + " cover image"} />
+            </StyledImage>
+            <StyledMeta>
+                <StyledTitle rows="2" title={song.track_name}>{song.track_name}</StyledTitle>
+                <StyledAuthor rows="1" title={song.artist_name}>{song.artist_name}</StyledAuthor>
+                {song.explicit === 1 && <StyledExplicit title="This song contains explicit lyrics.">!</StyledExplicit>}
+            </StyledMeta>
+        </StyledSongTile>
+    )
 }
 
 const StyledSongTile = styled.button`
