@@ -24,7 +24,7 @@ const TestPage = () => {
   const handlePercentageChange = (percentage) => setProgress(percentage);
   const endTest = (data) => {
     setIsTestRunning(false);
-    const summaryData = {...data, time: {minutes,seconds}, artist:song.artist_name, track: song.track_name };
+    const summaryData = {...data, time: {minutes,seconds}, artist:song.artist_name, track: song.track_name,track_id: song.track_id };
     navigate('/summary',{state:{...summaryData}})
   }
   const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};

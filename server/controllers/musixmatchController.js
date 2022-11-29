@@ -23,7 +23,8 @@ const createLyricsObject = (lyricsObj, metaObj) => {
         copyright: lyricsObj.lyrics_copyright,
         isExplicit: lyricsObj.explicit,
         track_name: metaObj.track_name,
-        artist_name: metaObj.artist_name
+        artist_name: metaObj.artist_name,
+        track_id: metaObj.track_id,
     }
 }
 
@@ -90,7 +91,6 @@ exports.getLyrics = GlobalTryCatchAsync(async(req,res,next)=>{
         const error = new ErrorHandler(result.copyright,200);
         return next(error);
     }
-
     res.status(200).json(result);
 });
 

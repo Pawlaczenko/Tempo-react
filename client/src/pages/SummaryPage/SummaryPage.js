@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import {useLocation} from 'react-router-dom';
+import {useLocation, Link} from 'react-router-dom';
 import Heading from '../../components/Heading';
 import SummaryTable from '../../components/SummaryTable';
 import {BlueButton,PrimaryButton} from '../../components/Button';
@@ -44,8 +44,8 @@ const SummaryPage = () => {
         </div>
         {Object.keys(summaryData).length && <SummaryTable data={summaryData} />}
         <StyledButtonContainer>
-          <BlueButton> <FiRepeat /> Try again</BlueButton>
-          <PrimaryButton><FiHome />Home</PrimaryButton>
+          <BlueButton as={Link} to={`/test/${location.state.track_id}`}> <FiRepeat /> Try again</BlueButton>
+          <PrimaryButton as={Link} to="/"><FiHome />Home</PrimaryButton>
         </StyledButtonContainer>
     </StyledMain>
   )
@@ -55,7 +55,7 @@ const StyledMain = styled.main`
   display: flex;
   flex-direction:column;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: start;
   height: 100%;
 `;
 
