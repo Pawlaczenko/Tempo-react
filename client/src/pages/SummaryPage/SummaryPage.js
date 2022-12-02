@@ -4,7 +4,7 @@ import Heading from '../../components/Heading';
 import SummaryTable from '../../components/SummaryTable';
 import {BlueButton,PrimaryButton} from '../../components/Button';
 import {FiHome,FiRepeat} from 'react-icons/fi';
-import {TYPING_ERROR_STATES} from '../../constants';
+import {TYPING_ERROR_STATES, BREAKPOINTS} from '../../constants';
 import {addLeadingZeros} from '../../helpers';
 
 import {calculateNetWPM,calculateAccuracy, getWordsCount, getErrorsCount} from './SummaryPage.helper';
@@ -57,6 +57,12 @@ const StyledMain = styled.main`
   align-items: flex-start;
   justify-content: start;
   height: 100%;
+
+  @media only screen and (${BREAKPOINTS.burger}){
+     align-items: stretch;
+     justify-content: space-evenly;
+     gap: 3rem;
+  }
 `;
 
 const StyledSongInfo = styled.p`
@@ -67,6 +73,10 @@ const StyledSongInfo = styled.p`
 const StyledButtonContainer = styled.div`
   display: flex;
   gap: 1rem;
+
+  @media only screen and (${BREAKPOINTS.burger}){
+     justify-content: center;
+  }
 `;
 
 export default SummaryPage

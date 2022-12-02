@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {unCamelString} from "../../helpers/"
 import Heading from "../Heading";
 import Paragraph from "../Paragraph";
+import {BREAKPOINTS} from '../../constants';
 
 function SummaryTable({data}) {
   const [activeRow, setActiveRow] = useState(0);
@@ -61,23 +62,40 @@ const Wrapper = styled.div`
   flex: 1;
   align-content: center;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 5rem;
+
+  @media only screen and (${BREAKPOINTS.burger}){
+     flex-direction: column;
+     justify-content: center;
+     align-items: stretch;
+  }
+
 `;
 
 const StyledSummaryTable = styled.div`
-  width: 100%;
   font-size: 2rem;
   text-align: right;
-  align-self: center;
+  flex: 1;
+
+  @media only screen and (${BREAKPOINTS.burger}){
+     flex: 0;
+  }
 `;
 
 const StyledSummaryRow = styled.div`
   --row-height: 3rem;
   position: relative;
   height: var(--row-height);
+
   display: flex;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
   transition: all .2s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -88,7 +106,6 @@ const StyledSummaryRow = styled.div`
   &:nth-child(even) {
     background-color: var(--color-primary-opace);
   }
-
   
   ${props => props.wpm && `
     color: var(--color-secondary);
@@ -116,6 +133,10 @@ const StyledSummaryRow = styled.div`
       z-index: -1;
     }
   `}
+
+  @media only screen and (${BREAKPOINTS.burger}){
+    --row-height: 4rem;
+  }
 `;
 
 const StyledSummaryCell = styled.div`
@@ -129,8 +150,11 @@ const StyledSummaryCell = styled.div`
 
 const StyledTextContent = styled.section`
   text-align: left;
-  width: 80%;
-  justify-self: center;
+  flex: 1;
+
+  @media only screen and (${BREAKPOINTS.burger}){
+     flex: 1;
+  }
 `;
 
 export default SummaryTable;
