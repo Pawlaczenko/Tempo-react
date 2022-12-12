@@ -27,7 +27,7 @@ const TestPage = () => {
     const summaryData = {...data, time: {minutes,seconds}, artist:song.artist_name, track: song.track_name,track_id: song.track_id };
     navigate('/summary',{state:{...summaryData}})
   }
-  const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};
+  const fireTest = React.useCallback((shouldFire) => {setIsTestRunning(shouldFire)},[]);
 
   const headerText = `${song.track_name} - ${song.artist_name}`;
 

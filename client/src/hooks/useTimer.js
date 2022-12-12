@@ -13,11 +13,11 @@ const useTimer = (isRunning) => {
     useEffect(()=>{
         let interval;
         if(isRunning){
-        interval = setInterval(() => {
-            setTime((prevTime) => prevTime + 1);
-        },1000);
+            interval = setInterval(() => {
+                setTime((prevTime) => prevTime + 1);
+            },1000);
         } else if(!isRunning){
-        clearInterval(interval);
+            clearInterval(interval);
         }
         return () => clearInterval(interval);
     },[isRunning]);
