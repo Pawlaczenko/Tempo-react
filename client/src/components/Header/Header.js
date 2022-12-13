@@ -7,6 +7,7 @@ import { BREAKPOINTS } from '../../constants';
 import Burger from "./Burger";
 
 import {useLocation} from "react-router-dom";
+import { fadeInAnimation } from "../../styles/mixins";
 
 function Header() {
   const [isOpen, toggleOpen] = useState(false);
@@ -35,6 +36,8 @@ const Wrapper = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
+  ${fadeInAnimation()}
 `;
 
 const SideMenu = styled.div`

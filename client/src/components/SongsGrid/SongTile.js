@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 
 import defaultImage from '../../assets/images/defaultAlbumImage.svg';
-import {ellipsis} from '../../styles/mixins'
+import {ellipsis, fadeInAnimation} from '../../styles/mixins'
 import { BREAKPOINTS } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 
-const SongTile = ({song}) => {
+const SongTile = ({song, animationDelay}) => {
     const [songCover,setSongCover] = useState(defaultImage);
     const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const SongTile = ({song}) => {
     }
 
     return (
-        <StyledSongTile onClick={handleClick}>
+        <StyledSongTile onClick={handleClick} animationDelay={animationDelay}>
             <StyledImage>
                 <img src={songCover || defaultImage} alt={song.album_name + " cover image"} />
             </StyledImage>
@@ -48,6 +48,7 @@ const StyledSongTile = styled.button`
     background-color: transparent;
     border: none;
     padding: 0;
+    ${props => fadeInAnimation(props.animationDelay)};
 
     &:after,
     &:before{
@@ -108,13 +109,13 @@ const StyledMeta = styled.div`
 const StyledTitle = styled.p`
     font-size: 2.2rem;
     color: black;
-    ${ellipsis}
+    ${ellipsis(2)}
 `;
 
 const StyledAuthor = styled.p`
     font-size: 1.75rem;
     color: var(--text-color);
-    ${ellipsis}
+    ${ellipsis()}
 `;
 
 const StyledExplicit = styled.div`

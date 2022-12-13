@@ -2,7 +2,7 @@ import React from 'react'
 import TopInUsButton from '../../components/Button/TopInUsButton'
 import Heading from '../../components/Heading'
 import SearchBar from '../../components/SearchBar'
-import {flexCenter} from '../../styles/mixins';
+import {flexCenter, fadeInAnimation} from '../../styles/mixins';
 import {BREAKPOINTS} from '../../constants';
 
 import styled from 'styled-components';
@@ -31,6 +31,7 @@ const StyledMain = styled.main`
 
   & > h1 {
     text-align: center;
+    ${fadeInAnimation()};
   }
 
   & span {
@@ -40,6 +41,7 @@ const StyledMain = styled.main`
 
 const CTAs = styled.div`
   ${flexCenter};
+  ${fadeInAnimation(0.2)};
   flex-direction: column;
   gap: 1.5rem;
 

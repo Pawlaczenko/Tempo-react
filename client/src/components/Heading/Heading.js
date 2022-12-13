@@ -7,7 +7,7 @@ function Heading({level=1,children}) {
   return <StyledHeading className={hedingLevel} as={hedingLevel}>{children}</StyledHeading>
 }
 
-const StyledHeading = styled.h1`
+const StyledHeading = styled.h1`  
   & mark {
     color: var(--color-primary);
     background-color: transparent;

@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import {useLocation, Link} from 'react-router-dom';
 import Heading from '../../components/Heading';
-import SummaryTable from '../../components/SummaryTable';
+import SummaryTable, { StyledSummaryWrapper } from '../../components/SummaryTable';
 import {BlueButton,PrimaryButton} from '../../components/Button';
 import {FiHome,FiRepeat} from 'react-icons/fi';
 import {TYPING_ERROR_STATES, BREAKPOINTS} from '../../constants';
@@ -10,6 +10,7 @@ import {addLeadingZeros} from '../../helpers';
 import {calculateNetWPM,calculateAccuracy, getWordsCount, getErrorsCount} from './SummaryPage.helper';
 
 import styled from 'styled-components';
+import { fadeInAnimation } from '../../styles/mixins';
 
 const SummaryPage = () => {
   const location = useLocation();
@@ -38,10 +39,10 @@ const SummaryPage = () => {
 
   return (
     <StyledMain>
-        <div>
+        <StyledSummaryHeader>
           <Heading level={2}>Summary</Heading>
           <StyledSongInfo>{location.state.artist} - {location.state.track}</StyledSongInfo>
-        </div>
+        </StyledSummaryHeader>
         {Object.keys(summaryData).length && <SummaryTable data={summaryData} />}
         <StyledButtonContainer>
           <BlueButton as={Link} to={`/test/${location.state.track_id}`}> <FiRepeat /> Try again</BlueButton>
@@ -51,19 +52,7 @@ const SummaryPage = () => {
   )
 }
 
-const StyledMain = styled.main`
-  display: flex;
-  flex-direction:column;
-  align-items: flex-start;
-  justify-content: start;
-  height: 100%;
-
-  @media only screen and (${BREAKPOINTS.burger}){
-     align-items: stretch;
-     justify-content: space-evenly;
-     gap: 3rem;
-  }
-`;
+const StyledSummaryHeader = styled.div``;
 
 const StyledSongInfo = styled.p`
   font-size: 2.2rem;
@@ -76,6 +65,32 @@ const StyledButtonContainer = styled.div`
 
   @media only screen and (${BREAKPOINTS.burger}){
      justify-content: center;
+  }
+`;
+
+const StyledMain = styled.main`
+  display: flex;
+  flex-direction:column;
+  align-items: flex-start;
+  justify-content: start;
+  height: 100%;
+
+  & > ${StyledSummaryHeader} {
+    ${fadeInAnimation()};
+  }
+
+  & > ${StyledSummaryWrapper} {
+    ${fadeInAnimation(0.2)};
+  }
+
+  & > ${StyledButtonContainer}{
+    ${fadeInAnimation(.4)};
+  }
+
+  @media only screen and (${BREAKPOINTS.burger}){
+     align-items: stretch;
+     justify-content: space-evenly;
+     gap: 3rem;
   }
 `;
 

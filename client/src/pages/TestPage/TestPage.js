@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import {ellipsis} from '../../styles/mixins'
+import {ellipsis, fadeInAnimation} from '../../styles/mixins'
 
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -7,7 +7,7 @@ import useFetch from '../../hooks/useFetch';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
-import LyricsBoard from '../../components/LyricsBoard';
+import LyricsBoard, { LyricsBoardWrapper } from '../../components/LyricsBoard';
 import { BREAKPOINTS } from '../../constants';
 import useTimer from '../../hooks/useTimer';
 
@@ -66,7 +66,7 @@ const StyledMain = styled.main`
 const StyledHeaderTitle = styled.p`
   font-weight: 300;
   font-size: 2.1rem;
-  ${ellipsis};
+  ${ellipsis()};
 `;
 
 const StyledMessage = styled.div`
@@ -87,9 +87,15 @@ const StyledTestHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ${StyledHeaderTitle} {flex:2;}
-  ${StyledMessage} { flex:1.5;}
-  ${StyledTimer} {flex: 2;}
+  ${StyledHeaderTitle} {
+    flex:2;
+    ${fadeInAnimation()};
+  };
+  ${StyledMessage} {flex:1.5;}
+  ${StyledTimer} {
+    flex: 2;
+    ${fadeInAnimation(.2)};
+  }
 `;
 
 const ProgressBar = styled.div`

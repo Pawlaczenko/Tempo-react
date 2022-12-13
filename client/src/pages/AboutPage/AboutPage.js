@@ -5,6 +5,7 @@ import equation from '../../assets/images/equation.png';
 import TopInUsButton from '../../components/Button/TopInUsButton';
 import { BREAKPOINTS } from '../../constants';
 import Paragraph from '../../components/Paragraph';
+import { fadeInAnimation } from '../../styles/mixins';
 
 const AboutPage = () => {
   return (
@@ -50,10 +51,14 @@ const StyledMain = styled.main`
         text-align: center;
       }
     }
+  & > h1 {
+    ${fadeInAnimation()};
+  }
 `;
 
 const Paragraphs = styled.div`
   grid-area: paragraphs;
+  ${fadeInAnimation(.2)};
 `;
 
 const CTAs = styled.div`
@@ -62,6 +67,7 @@ const CTAs = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  ${fadeInAnimation(.4)};
 
   & > p{
     font-size: 3.4rem;

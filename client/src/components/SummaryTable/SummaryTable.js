@@ -45,7 +45,7 @@ function SummaryTable({data}) {
     },
   ];
   return (
-    <Wrapper>
+    <StyledSummaryWrapper>
       <StyledSummaryTable>
         {tableData}
       </StyledSummaryTable>
@@ -53,11 +53,11 @@ function SummaryTable({data}) {
         <Heading level={2}><b>{summaryTextContent[activeRow].title}</b></Heading>
         <Paragraph>{summaryTextContent[activeRow].text}</Paragraph>
       </StyledTextContent>
-    </Wrapper>
+    </StyledSummaryWrapper>
   )
 }
 
-const Wrapper = styled.div`
+export const StyledSummaryWrapper = styled.div`
   width: 100%;
   flex: 1;
   align-content: center;

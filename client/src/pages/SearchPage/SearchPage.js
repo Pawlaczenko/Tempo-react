@@ -8,6 +8,7 @@ import SongsGrid from '../../components/SongsGrid/SongsGrid';
 import Heading from "../../components/Heading";
 import ErrorMessage from '../../components/ErrorMessage';
 import PaginationController from '../../components/PaginationController/PaginationController';
+import { fadeInAnimation } from '../../styles/mixins';
 
 const SearchPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -52,6 +53,7 @@ const StyledMain = styled.main`
   display: grid;
   grid-template-rows: auto 1fr auto;
   align-items: center;
+  ${fadeInAnimation()};
 `;
 
 const StyledSpacer = styled.div`
