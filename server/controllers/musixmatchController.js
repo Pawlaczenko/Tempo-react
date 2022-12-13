@@ -19,7 +19,7 @@ const createTrackObject = (track,cover) => {
 const createLyricsObject = (lyricsObj, metaObj) => {
     return {
         lyrics: getCleanLyrics(lyricsObj.lyrics_body),
-        trackingUrl: lyricsObj.pixel_tracking_url,
+        trackingUrl: lyricsObj.script_tracking_url,
         copyright: lyricsObj.lyrics_copyright,
         isExplicit: lyricsObj.explicit,
         track_name: metaObj.track_name,

@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import {ellipsis, fadeInAnimation} from '../../styles/mixins'
 
 import styled from 'styled-components';
@@ -7,7 +7,7 @@ import useFetch from '../../hooks/useFetch';
 import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
-import LyricsBoard, { LyricsBoardWrapper } from '../../components/LyricsBoard';
+import LyricsBoard from '../../components/LyricsBoard';
 import { BREAKPOINTS } from '../../constants';
 import useTimer from '../../hooks/useTimer';
 
@@ -37,6 +37,7 @@ const TestPage = () => {
       {isPending && <LoadingSpinner />}
       {song && !isPending && !error &&
         <>
+          <script type="text/javascript" src={song.trackingUrl} />
           <StyledTestHeader>
             <StyledHeaderTitle title={headerText}>{headerText}</StyledHeaderTitle>
             {!isTestRunning && <StyledMessage>Start Typing</StyledMessage>}
@@ -44,6 +45,7 @@ const TestPage = () => {
           </StyledTestHeader>
           <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} endTest={endTest} />
           <ProgressBar style={{"--progress-value": `${progress}%`}} />
+          <StyledCopyright>{song.copyright}</StyledCopyright>
         </> 
       }
     </StyledMain>
@@ -115,6 +117,12 @@ const ProgressBar = styled.div`
     background-color: var(--color-primary);
     transition: width .1s ease-in-out;
   }
+`;
+
+const StyledCopyright = styled.p`
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--color-grey-dark);
 `;
 
 export default TestPage

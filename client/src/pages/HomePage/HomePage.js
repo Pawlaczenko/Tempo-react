@@ -6,6 +6,7 @@ import {flexCenter, fadeInAnimation} from '../../styles/mixins';
 import {BREAKPOINTS} from '../../constants';
 
 import styled from 'styled-components';
+import MusixMatchBadge,{StyledBadgeWrapper} from '../../components/MusixMatchBadge/MusixMatchBadge';
 
 const HomePage = () => {
   return (
@@ -16,6 +17,7 @@ const HomePage = () => {
         <span>or</span>
         <TopInUsButton />
       </CTAs>
+      <MusixMatchBadge />
     </StyledMain>
   )
 }
@@ -36,6 +38,10 @@ const StyledMain = styled.main`
 
   & span {
     font-size: 2.3rem;
+  }
+
+  & > ${StyledBadgeWrapper} {
+    ${fadeInAnimation(.4)};
   }
 `;
 
