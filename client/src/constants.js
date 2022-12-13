@@ -16,3 +16,5 @@ export const TYPING_ERROR_STATES = {
     CORRECT: 'corrected',
     UNCORRECT: 'uncorrected'
 }
+
+export const PORTFOLIO_LINK = "https://pawlaczenko.github.io/";
