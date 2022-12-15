@@ -6,7 +6,7 @@ import { BREAKPOINTS } from "../../constants";
 function MusixMatchBadge() {
   return (
     <StyledBadgeWrapper href="https://www.musixmatch.com" target="_blank">
-      <img src={MusixMatchBatch} alt="Musixmatch badge"/>
+      <img src={MusixMatchBatch} alt="Lyrics powered by musixmatch"/>
     </StyledBadgeWrapper>
   ) 
   
