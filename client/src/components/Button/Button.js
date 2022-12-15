@@ -7,6 +7,7 @@ export default function Button({children}) {
 
 const StyledButton = styled.button`
   font-size: 2.2rem;
+  text-decoration: none;
 
   background-color: var(--button-color);
   border: 3px solid var(--button-color);
@@ -31,6 +32,11 @@ const StyledButton = styled.button`
 
 export const BlueButton = styled(StyledButton)`
   --button-color: var(--color-secondary);
+  color: white;
+`;
+
+export const PrimaryButton = styled(StyledButton)`
+  --button-color: var(--color-primary);
   color: white;
 `;
 

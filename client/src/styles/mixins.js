@@ -13,9 +13,13 @@ export const flexCenter = css`
     justify-content: center;
 `;
 
-export const ellipsis = css`
+export const ellipsis = (rows) => css`
     display: -webkit-box;
-    -webkit-line-clamp: ${props => props.rows || 1};
+    -webkit-line-clamp: ${rows || 1};
     -webkit-box-orient: vertical;  
     overflow: hidden;
+`;
+
+export const fadeInAnimation = (delay) => css`
+    animation: fadeIn .3s ease-in-out ${delay || 0}s backwards;
 `;

@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import SearchBar from "../SearchBar";
 import Logo from "./Logo";
 import Navigation from "./Navigation";
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 import Burger from "./Burger";
 
 import {useLocation} from "react-router-dom";
+import { fadeInAnimation } from "../../styles/mixins";
 
 function Header() {
   const [isOpen, toggleOpen] = useState(false);
@@ -35,6 +36,8 @@ const Wrapper = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  
+  ${fadeInAnimation()}
 `;
 
 const SideMenu = styled.div`
@@ -42,7 +45,7 @@ const SideMenu = styled.div`
   gap: 4rem;
   transition: all .3s ease;
 
-  @media only screen and (${breakpoints.burger}){
+  @media only screen and (${BREAKPOINTS.burger}){
     position: absolute;
     z-index: 100;
     left: ${props => props.isOpen ? "0" : "100%"};

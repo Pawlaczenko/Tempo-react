@@ -2,10 +2,11 @@ import React from 'react'
 import TopInUsButton from '../../components/Button/TopInUsButton'
 import Heading from '../../components/Heading'
 import SearchBar from '../../components/SearchBar'
-import {flexCenter} from '../../styles/mixins';
-import {breakpoints} from '../../constants';
+import {flexCenter, fadeInAnimation} from '../../styles/mixins';
+import {BREAKPOINTS} from '../../constants';
 
 import styled from 'styled-components';
+import MusixMatchBadge,{StyledBadgeWrapper} from '../../components/MusixMatchBadge/MusixMatchBadge';
 
 const HomePage = () => {
   return (
@@ -16,6 +17,7 @@ const HomePage = () => {
         <span>or</span>
         <TopInUsButton />
       </CTAs>
+      <MusixMatchBadge />
     </StyledMain>
   )
 }
@@ -31,19 +33,25 @@ const StyledMain = styled.main`
 
   & > h1 {
     text-align: center;
+    ${fadeInAnimation()};
   }
 
   & span {
     font-size: 2.3rem;
   }
+
+  & > ${StyledBadgeWrapper} {
+    ${fadeInAnimation(.4)};
+  }
 `;
 
 const CTAs = styled.div`
   ${flexCenter};
+  ${fadeInAnimation(0.2)};
   flex-direction: column;
   gap: 1.5rem;
 
-  @media only screen and (${breakpoints.phone}){
+  @media only screen and (${BREAKPOINTS.phone}){
     width: 100%;
   } 
 `;

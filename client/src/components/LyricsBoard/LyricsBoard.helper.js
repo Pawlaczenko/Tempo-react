@@ -5,10 +5,11 @@ export const checkForEnter = (letter) => {
 }
 
 export const replaceWhitespaceCharacters = (letter) => {
-    if(letter === ' ') return '_';
-    if(letter === '\n') return <><FiCornerDownLeft /><br /></>
-
-    return letter;
+    switch(letter){
+        case ' ': return '_';
+        case '\n': return <><FiCornerDownLeft /><br /></>;
+        default: return letter;
+    }
 }
 
 export const isNotFunctionKey = (letter) => {
@@ -20,3 +21,10 @@ export const calculateProgress = (currentIndex, noOfLetters) => {
 }
 
 export const generateUniqueKey = (keyCode) => `${keyCode}-${new Date().getTime()}`;
+
+export const generateTypingErrorObject = (index,state="uncorrected") => {
+    return {
+        index: index, 
+        state: state
+    }
+};

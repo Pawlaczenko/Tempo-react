@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from 'react'
-import {ellipsis} from '../../styles/mixins'
+import React, { useState } from 'react'
+import {ellipsis, fadeInAnimation} from '../../styles/mixins'
 
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -8,8 +8,8 @@ import ErrorMessage from '../../components/ErrorMessage';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Timer,{StyledTimer} from '../../components/Timer';
 import LyricsBoard from '../../components/LyricsBoard';
-import { generateSummaryData } from './TestPage.helper';
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
+import useTimer from '../../hooks/useTimer';
 
 const TestPage = () => {
   const {track_id} = useParams();
@@ -18,20 +18,18 @@ const TestPage = () => {
   const {data:song,isPending, error} = useFetch({url});
   const [progress, setProgress] = useState(0);
   const [isTestRunning, setIsTestRunning] = useState(false);
+  const [minutes,seconds] = useTimer(isTestRunning);
   const navigate = useNavigate();
 
   const handlePercentageChange = (percentage) => setProgress(percentage);
-  const fireTest = (shouldFire) => {if(!isTestRunning && shouldFire) setIsTestRunning(shouldFire)};
+  const endTest = (data) => {
+    setIsTestRunning(false);
+    const summaryData = {...data, time: {minutes,seconds}, artist:song.artist_name, track: song.track_name,track_id: song.track_id };
+    navigate('/summary',{state:{...summaryData}})
+  }
+  const fireTest = React.useCallback((shouldFire) => {setIsTestRunning(shouldFire)},[]);
 
   const headerText = `${song.track_name} - ${song.artist_name}`;
-
-  useEffect(() => {
-    if(progress === 100){
-      setIsTestRunning(false);
-      const summaryData = generateSummaryData({});
-      navigate('/summary',summaryData)
-    }
-  },[progress]);
 
   return (
     <StyledMain>
@@ -39,13 +37,15 @@ const TestPage = () => {
       {isPending && <LoadingSpinner />}
       {song && !isPending && !error &&
         <>
+          <script type="text/javascript" src={song.trackingUrl} />
           <StyledTestHeader>
             <StyledHeaderTitle title={headerText}>{headerText}</StyledHeaderTitle>
             {!isTestRunning && <StyledMessage>Start Typing</StyledMessage>}
-            <Timer isRunning={isTestRunning} />
+            <Timer time={{minutes, seconds}} />
           </StyledTestHeader>
-          <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} />
+          <LyricsBoard lyrics={song.lyrics} handlePercentageChange={handlePercentageChange} fireTest={fireTest} endTest={endTest} />
           <ProgressBar style={{"--progress-value": `${progress}%`}} />
+          <StyledCopyright>{song.copyright}</StyledCopyright>
         </> 
       }
     </StyledMain>
@@ -60,7 +60,7 @@ const StyledMain = styled.main`
   display: flex;
   flex-direction: column;
 
-  @media only screen and (${breakpoints.small}){
+  @media only screen and (${BREAKPOINTS.small}){
       padding: 0 .5rem;
   }
 `;
@@ -68,7 +68,7 @@ const StyledMain = styled.main`
 const StyledHeaderTitle = styled.p`
   font-weight: 300;
   font-size: 2.1rem;
-  ${ellipsis};
+  ${ellipsis()};
 `;
 
 const StyledMessage = styled.div`
@@ -79,7 +79,7 @@ const StyledMessage = styled.div`
 
   animation: blink 1.5s ease-in-out infinite;
 
-  @media only screen and (${breakpoints.small}){
+  @media only screen and (${BREAKPOINTS.small}){
       font-size: 1.5rem;
   }
 `;
@@ -89,9 +89,15 @@ const StyledTestHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  ${StyledHeaderTitle} {flex:2;}
-  ${StyledMessage} { flex:1.5;}
-  ${StyledTimer} {flex: 2;}
+  ${StyledHeaderTitle} {
+    flex:2;
+    ${fadeInAnimation()};
+  };
+  ${StyledMessage} {flex:1.5;}
+  ${StyledTimer} {
+    flex: 2;
+    ${fadeInAnimation(.2)};
+  }
 `;
 
 const ProgressBar = styled.div`
@@ -111,6 +117,12 @@ const ProgressBar = styled.div`
     background-color: var(--color-primary);
     transition: width .1s ease-in-out;
   }
+`;
+
+const StyledCopyright = styled.p`
+  text-align: center;
+  font-size: 1.4rem;
+  color: var(--color-grey-dark);
 `;
 
 export default TestPage

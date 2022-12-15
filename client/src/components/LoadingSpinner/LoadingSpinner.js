@@ -20,10 +20,10 @@ const StyledSpinnerWrapper = styled.div`
 `;
 
 const StyledSpinner = styled.div`
-  width: 10rem;
-  height: 10rem;
-  border: 1rem solid var(--color-primary);
-  border-radius: 2rem;
+  width: 6rem;
+  height: 6rem;
+  border: .5rem solid var(--color-primary);
+  border-radius: 10%;
 
   animation: spin 2s ease-in-out infinite;
 `;

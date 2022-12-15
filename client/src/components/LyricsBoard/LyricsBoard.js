@@ -1,19 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import LyricsPlaceholder from "./LyricsPlaceholder";
-import {checkForEnter,replaceWhitespaceCharacters, isNotFunctionKey,calculateProgress, generateUniqueKey} from './LyricsBoard.helper';
-import {scrollBehaviour} from '../../constants';
+import {
+  checkForEnter,
+  replaceWhitespaceCharacters, 
+  isNotFunctionKey,
+  calculateProgress, 
+  generateUniqueKey, 
+  generateTypingErrorObject
+} from './LyricsBoard.helper';
+import {SCROLL_BEHAVIOUR, TYPING_ERROR_STATES} from '../../constants';
 
-function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
+function LyricsBoard({lyrics,handlePercentageChange,fireTest,endTest}) {
   const [lettersComponents, setLettersComponents] = useState([]);
   const [lettersArray, setLettersArray] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [typingErrors, setTypingErrors] = useState([]);
 
   const cursorRef = useRef(null);
   const lyricsBoardRef = useRef(null);
 
   const getCurrentLetter = () => replaceWhitespaceCharacters(lettersArray[currentIndex]);
-  const validatePressedLetter = (pressedLetter) => pressedLetter === lettersArray[currentIndex];
+  const validatePressedLetter = (pressedLetter) => (pressedLetter === lettersArray[currentIndex] || pressedLetter==='Backspace');
+  const handleTypingError = (index, state = TYPING_ERROR_STATES.UNCORRECT) => {
+    const foundIndex = typingErrors.findIndex(err => err.index === index);
+    if(foundIndex >= 0) {
+      let copy = [...typingErrors];
+      copy[foundIndex].state = state;
+      setTypingErrors(copy);
+    } else if (state===TYPING_ERROR_STATES.UNCORRECT) {
+      setTypingErrors([...typingErrors,generateTypingErrorObject(index)])
+    }
+  }
 
   //Split lyrics into array of characters
   useEffect(() => {
@@ -30,11 +48,15 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
 
   useEffect(() => {
     //Scroll to cursor
-    cursorRef.current.scrollIntoView(scrollBehaviour);
+    cursorRef.current.scrollIntoView(SCROLL_BEHAVIOUR);
 
     //Update progress
     let progress = calculateProgress(currentIndex,lettersArray.length);
     handlePercentageChange(progress);
+    if(progress === 100){
+      const summaryData = {errors: typingErrors, noOfLetters: lettersArray.length};
+      endTest(summaryData);
+    }
   },[currentIndex]);
 
   const handleKeyStroke = (e) => {
@@ -46,8 +68,11 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
       let copy = [...lettersComponents];
       let indexShift = 1;
 
+      if(!isPressedKeyCorrect) handleTypingError(currentIndex);
+      
       if(e.key === "Backspace"){
         if (lettersComponents.length === 0) return;
+        handleTypingError(currentIndex - 1, TYPING_ERROR_STATES.CORRECT);
         indexShift = -1;
         copy.pop();
       } else {
@@ -58,7 +83,7 @@ function LyricsBoard({lyrics,handlePercentageChange,fireTest}) {
       }
 
       setLettersComponents(copy);
-      setCurrentIndex(currentIndex+indexShift);
+      setCurrentIndex(index => index + indexShift);
     }
   }
 

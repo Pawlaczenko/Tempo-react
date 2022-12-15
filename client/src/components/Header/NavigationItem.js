@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
 
 const NavigationItem = ({children, path}) => {
-
   return (
-    <StyledLink to={path} >
+    <StyledLink as={NavLink} to={path} >
         {children}
     </StyledLink>
   )
 }
 
-const StyledLink = styled(NavLink)`
+export const StyledLink = styled.a`
     position: relative;
 
     text-decoration: none;

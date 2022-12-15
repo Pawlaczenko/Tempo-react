@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { breakpoints } from '../../constants';
+import { BREAKPOINTS } from '../../constants';
 
 const Burger = ({isOpen, handleClick}) => {
     return (
@@ -71,7 +71,7 @@ const StyledBurger = styled.button`
 
 
 
-    @media only screen and (${breakpoints.burger}){
+    @media only screen and (${BREAKPOINTS.burger}){
         display: block;
     }
 `;

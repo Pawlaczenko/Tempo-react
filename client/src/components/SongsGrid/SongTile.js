@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 
 import defaultImage from '../../assets/images/defaultAlbumImage.svg';
-import {ellipsis} from '../../styles/mixins'
-import { breakpoints } from '../../constants';
+import {ellipsis, fadeInAnimation} from '../../styles/mixins'
+import { BREAKPOINTS } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 
-const SongTile = ({song}) => {
+const SongTile = ({song, animationDelay}) => {
     const [songCover,setSongCover] = useState(defaultImage);
     const navigate = useNavigate();
 
@@ -21,18 +21,18 @@ const SongTile = ({song}) => {
         navigate(`/test/${song.track_id}`);
     }
 
-  return (
-    <StyledSongTile onClick={handleClick}>
-        <StyledImage>
-            <img src={songCover || defaultImage} alt={song.album_name + " cover image"} />
-        </StyledImage>
-        <StyledMeta>
-            <StyledTitle rows="2" title={song.track_name}>{song.track_name}</StyledTitle>
-            <StyledAuthor rows="1" title={song.artist_name}>{song.artist_name}</StyledAuthor>
-            {song.explicit === 1 && <StyledExplicit title="This song contains explicit lyrics.">!</StyledExplicit>}
-        </StyledMeta>
-    </StyledSongTile>
-  )
+    return (
+        <StyledSongTile onClick={handleClick} animationDelay={animationDelay}>
+            <StyledImage>
+                <img src={songCover || defaultImage} alt={song.album_name + " cover image"} />
+            </StyledImage>
+            <StyledMeta>
+                <StyledTitle rows="2" title={song.track_name}>{song.track_name}</StyledTitle>
+                <StyledAuthor rows="1" title={song.artist_name}>{song.artist_name}</StyledAuthor>
+                {song.explicit === 1 && <StyledExplicit title="This song contains explicit lyrics.">!</StyledExplicit>}
+            </StyledMeta>
+        </StyledSongTile>
+    )
 }
 
 const StyledSongTile = styled.button`
@@ -48,6 +48,7 @@ const StyledSongTile = styled.button`
     background-color: transparent;
     border: none;
     padding: 0;
+    ${props => fadeInAnimation(props.animationDelay)};
 
     &:after,
     &:before{
@@ -83,7 +84,7 @@ const StyledSongTile = styled.button`
         }
     }
 
-    @media only screen and (${breakpoints.extra_small}){
+    @media only screen and (${BREAKPOINTS.extra_small}){
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
     }
@@ -108,13 +109,13 @@ const StyledMeta = styled.div`
 const StyledTitle = styled.p`
     font-size: 2.2rem;
     color: black;
-    ${ellipsis}
+    ${ellipsis(2)}
 `;
 
 const StyledAuthor = styled.p`
     font-size: 1.75rem;
     color: var(--text-color);
-    ${ellipsis}
+    ${ellipsis()}
 `;
 
 const StyledExplicit = styled.div`
