@@ -4,9 +4,7 @@
   "description": "Testing node.js with tempo app",
   "main": "index.js",
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "nodemon server/server.js",
-    "build": "cd client && npm install && npm run build"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
