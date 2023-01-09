@@ -18,7 +18,7 @@ const errorControler = require('./controllers/errorController');
 app.use(express.json());
 
 // Have Node serve the files for our built React app
-app.use(express.static(path.resolve(__dirname, '../client/build')));
+//app.use(express.static(path.resolve(__dirname, '../client/build')));
 
 app.use('/api',apiRouter);
 
