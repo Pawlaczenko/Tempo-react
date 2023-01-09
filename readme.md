@@ -1,3 +1,5 @@
+Try this app live: https://tempo-react.netlify.app/
+
 Tempo is a website, where you can test your typing speed using your favorite songs. Just search for a song, artist, or album and you'll get the results.
 
 Type the lyrics as fast as you can and see how well you do. Five keystrokes are equivalent of one word. One error is one misspelled character. Your final wpm(words per minute) score is calculated by the following equation:

@@ -14,7 +14,7 @@
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "http://localhost:3001/",
+  "proxy": "https://tempo-backend-2i4ujbcyl-pawlaczenko.vercel.app/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
