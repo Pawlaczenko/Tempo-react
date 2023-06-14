@@ -5,7 +5,7 @@ import { flexCenter } from '../../styles/mixins'
 const PaginationItem = ({handleClick,current,children, disabled}) => {
   return (
     <StyledPaginationItem current={current} onClick={handleClick}>
-      <StyledPaginationButton disabled={disabled}>{children}</StyledPaginationButton>
+      <StyledPaginationButton disabled={disabled} role="button">{children}</StyledPaginationButton>
     </StyledPaginationItem>
   )
 }

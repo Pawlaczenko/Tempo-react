@@ -23,7 +23,7 @@ function SearchBar({variant, placeholder = "Search"}) {
   }
 
   return (
-    <Wrapper variant={variant} onSubmit={handleSubmit}>
+    <Wrapper variant={variant} onSubmit={handleSubmit} data-testid="search-bar-form">
       <SearchInput type="text" placeholder={placeholder} onChange={handleOnChange} value={query}/>
       <SearchButton>
         <FiSearch />
