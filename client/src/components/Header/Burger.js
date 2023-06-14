@@ -13,9 +13,7 @@ const Burger = ({isOpen, handleClick}) => {
 const StyledBurger = styled.button`
     --burger-gap: .7rem;
     --burger-height: .2rem;
-    --burger-cross-width: 4.8rem;
     --burger-color: black;
-    --burger-translate: .85rem;
 
     display: none;
     width: 4rem;
@@ -68,8 +66,6 @@ const StyledBurger = styled.button`
             transform: translate(0,-5px) rotate(-45deg);
         `}
     }
-
-
 
     @media only screen and (${BREAKPOINTS.burger}){
         display: block;
